@@ -1593,6 +1593,32 @@
     return LOCATIONS.find(l => l.id === id);
   }
 
+  function clampMapTransform() {
+    const viewport = document.getElementById("mapViewport");
+    if (!viewport) return;
+    const rect = viewport.getBoundingClientRect();
+    const mapW = 1000 * mapTransform.scale;
+    const mapH = 700 * mapTransform.scale;
+
+    // Limita para que o mapa não suma da janela de visualização
+    const minX = rect.width - mapW;
+    const maxX = 0;
+    const minY = rect.height - mapH;
+    const maxY = 0;
+
+    if (mapW <= rect.width) {
+      mapTransform.x = (rect.width - mapW) / 2;
+    } else {
+      mapTransform.x = Math.max(minX, Math.min(maxX, mapTransform.x));
+    }
+
+    if (mapH <= rect.height) {
+      mapTransform.y = (rect.height - mapH) / 2;
+    } else {
+      mapTransform.y = Math.max(minY, Math.min(maxY, mapTransform.y));
+    }
+  }
+
   function openMap() {
     if (isDefeated()) { showDefeatScreen(0); return; }
     hideSubScreens();
@@ -1601,6 +1627,7 @@
     pendingTravelTarget = null;
     checkTravelArrival();
     renderMapNodes();
+    clampMapTransform();
     applyMapTransform();
     initMapInteraction();
     updateTravelBanner();
@@ -1703,6 +1730,7 @@
         dragDistance = Math.hypot(dx, dy);
         mapTransform.x = panStart.tx + dx;
         mapTransform.y = panStart.ty + dy;
+        clampMapTransform();
         applyMapTransform();
       } else if (pointers.size === 2 && pinchStart) {
         const pts = Array.from(pointers.values());
@@ -1714,6 +1742,7 @@
         mapTransform.y = pinchStart.center.y - (pinchStart.center.y - pinchStart.ty) * deltaScale;
         mapTransform.scale = newScale;
         dragDistance = 999;
+        clampMapTransform();
         applyMapTransform();
       }
     });
