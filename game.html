@@ -28,30 +28,74 @@
   .app {
     max-width: 480px;
     margin: 0 auto;
-    padding: 20px 16px 40px;
+    padding: 10px 16px 40px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-  }
-  h1 {
-    text-align: center;
-    font-size: 1.5rem;
-    margin: 8px 0 0;
-    color: var(--gold);
-    letter-spacing: 1px;
+    gap: 12px;
   }
   .subtitle {
     text-align: center;
     font-size: 0.85rem;
     color: var(--purple-light);
-    margin-top: -8px;
   }
   .card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(232,193,90,0.25);
     border-radius: 14px;
-    padding: 16px;
+    padding: 14px;
   }
+  
+  /* HEADER FIXO NO TOPO */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(21, 11, 46, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(232,193,90,0.3);
+    border-radius: 14px;
+    padding: 10px 14px;
+    margin-bottom: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .header-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .header-name { color: var(--text); font-size: 0.95rem; }
+  .header-house { color: var(--gold); }
+  .header-level { color: var(--purple-light); font-size: 0.8rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; }
+
+  .bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 1px;
+  }
+  .bar-outer {
+    background: rgba(0,0,0,0.4);
+    border-radius: 6px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .bar-inner {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .bar-hp { background: linear-gradient(90deg, #b03a3a, #e05a5a); }
+  .bar-mana { background: linear-gradient(90deg, #3a7bd5, #5aa8f0); }
+  .bar-xp { background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
+
   .name-row {
     display: flex;
     gap: 8px;
@@ -74,25 +118,6 @@
     padding: 8px 12px;
     font-size: 0.9rem;
   }
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    margin: 6px 0;
-    font-size: 0.95rem;
-  }
-  .bar-outer {
-    background: rgba(0,0,0,0.35);
-    border-radius: 6px;
-    height: 10px;
-    overflow: hidden;
-    margin-top: 4px;
-  }
-  .bar-inner {
-    height: 100%;
-    background: linear-gradient(90deg, var(--purple), var(--purple-light));
-    transition: width 0.3s ease;
-  }
-  .bar-inner.mana { background: linear-gradient(90deg, #3a7bd5, #5aa8f0); }
   .currencies {
     display: flex;
     justify-content: space-between;
@@ -103,29 +128,17 @@
     text-align: center;
     background: rgba(0,0,0,0.25);
     border-radius: 10px;
-    padding: 10px 6px;
+    padding: 8px 6px;
   }
   .currency .val {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: var(--gold);
   }
   .currency .lbl {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--purple-light);
   }
-  .cast-btn {
-    width: 100%;
-    padding: 18px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--purple), #4b2a99);
-    color: white;
-    box-shadow: 0 4px 14px rgba(125,79,214,0.5);
-  }
-  .cast-btn:active { transform: scale(0.97); }
   .log {
     font-size: 0.8rem;
     color: var(--purple-light);
@@ -143,38 +156,6 @@
     color: var(--gold);
     margin-bottom: 10px;
   }
-  .inv-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-  .inv-slot {
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 10px;
-    padding: 8px 4px;
-    text-align: center;
-    position: relative;
-  }
-  .inv-slot.empty { opacity: 0.35; }
-  .inv-slot .icon { font-size: 1.4rem; display: block; }
-  .inv-slot .count {
-    position: absolute;
-    bottom: 2px;
-    right: 6px;
-    font-size: 0.65rem;
-    color: var(--gold);
-    font-weight: bold;
-  }
-  .inv-slot .iname {
-    font-size: 0.6rem;
-    color: rgba(255,255,255,0.6);
-    display: block;
-    margin-top: 2px;
-  }
-  .rarity-comum { border-color: rgba(255,255,255,0.15); }
-  .rarity-raro { border-color: rgba(90,168,240,0.5); }
-  .rarity-epico { border-color: rgba(232,193,90,0.6); }
   .upgrade-row {
     display: flex;
     align-items: center;
@@ -187,7 +168,6 @@
   .upgrade-info { flex: 1; }
   .upgrade-info .uname { font-size: 0.9rem; font-weight: bold; }
   .upgrade-info .udesc { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
-  .upgrade-info .ulvl { font-size: 0.7rem; color: var(--purple-light); }
   .upgrade-buy {
     background: var(--purple);
     border: none;
@@ -311,6 +291,7 @@
   .top-nav {
     display: flex;
     gap: 8px;
+    margin-bottom: 4px;
   }
   .nav-btn {
     flex: 1;
@@ -321,13 +302,12 @@
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 12px;
-    padding: 10px 4px;
+    padding: 8px 4px;
     color: var(--text);
   }
   .nav-btn:active { background: rgba(255,255,255,0.1); }
-  .nav-btn .nav-icon { font-size: 1.5rem; line-height: 1; }
+  .nav-btn .nav-icon { font-size: 1.3rem; line-height: 1; }
   .nav-btn .nav-label { font-size: 0.65rem; color: rgba(255,255,255,0.7); }
-  .hp-bar .bar-inner { background: linear-gradient(90deg, #b03a3a, #e05a5a); }
   .zone-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(232,193,90,0.2);
@@ -659,32 +639,6 @@
   .combat-log .log-entry.entry-player { color: #a687f0; }
   .combat-log .log-entry.entry-enemy { color: #e5615a; }
   .combat-log .log-entry.entry-system { color: rgba(255,255,255,0.45); font-style: italic; }
-  .monster-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 10px;
-  }
-  .monster-row.locked { opacity: 0.45; }
-  .monster-icon { font-size: 1.8rem; }
-  .monster-info { flex: 1; }
-  .monster-info .mname { font-weight: bold; font-size: 0.95rem; }
-  .monster-info .mlvl { font-size: 0.72rem; color: var(--gold); }
-  .monster-info .mstats { font-size: 0.7rem; color: rgba(255,255,255,0.55); margin-top: 2px; }
-  .monster-fight-btn {
-    background: var(--purple);
-    border: none;
-    color: white;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-  }
-  .monster-fight-btn:disabled { opacity: 0.4; }
 </style>
 </head>
 <body>
@@ -721,7 +675,7 @@
 
     <button class="confirm-btn" id="confirmBtn" onclick="confirmCharacter()" disabled>Confirmar</button>
     <div class="hint">
-      Verificação de nickname é simulada neste protótipo (sem servidor ainda).<br>
+      Verificação de nickname é simulada neste protótipo.<br>
       <a href="#" onclick="resetProgress(); return false;" style="color:#e5615a;">🔄 Resetar progresso (teste)</a>
     </div>
   </div>
@@ -736,10 +690,39 @@
     <div class="hint">Cada casa dá um bônus permanente e vai definir a árvore de habilidades futura.</div>
   </div>
 
-  <!-- APP PRINCIPAL DO JOGO -->
-  <div class="hidden" id="mainApp">
-    <div class="subtitle" id="playerTagline">Protótipo v0.1 — Arcanum</div>
+  <!-- CONTAINER DE JOGO (HEADER FIXO + TELAS DO JOGO) -->
+  <div class="hidden" id="gameContainer">
+    
+    <!-- HEADER FIXO NO TOPO DA TELA COM STATUS NA ORDEM PEDIDA -->
+    <div class="sticky-header" id="stickyHeader">
+      <div class="header-info-row">
+        <span class="header-name" id="hdrPlayerName">Jogador</span>
+        <span class="header-house" id="hdrHouse">Casa</span>
+        <span class="header-level" id="hdrLevel">LV. 1</span>
+      </div>
+      
+      <div class="bar-container">
+        <!-- 1. BARRA DE HP -->
+        <div>
+          <div class="stat-line"><span>❤️ HP</span><span id="hdrHpText">30 / 30</span></div>
+          <div class="bar-outer"><div class="bar-inner bar-hp" id="hdrHpBar" style="width:100%"></div></div>
+        </div>
 
+        <!-- 2. BARRA DE MANA -->
+        <div>
+          <div class="stat-line"><span>🔵 Mana</span><span id="hdrManaText">10 / 10</span></div>
+          <div class="bar-outer"><div class="bar-inner bar-mana" id="hdrManaBar" style="width:100%"></div></div>
+        </div>
+
+        <!-- 3. BARRA DE XP -->
+        <div>
+          <div class="stat-line"><span>✨ XP</span><span id="hdrXpText">0 / 50</span></div>
+          <div class="bar-outer"><div class="bar-inner bar-xp" id="hdrXpBar" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MENU SUPERIOR DE NAVEGAÇÃO -->
     <div class="top-nav">
       <button class="nav-btn" onclick="navClick('mapa')">
         <span class="nav-icon">🗺️</span>
@@ -759,218 +742,190 @@
       </button>
     </div>
 
-    <div class="card">
-      <div class="stat-row">
-        <span>Nível <b id="levelVal">1</b></span>
-        <span id="xpText">0 / 50 XP</span>
-      </div>
-      <div class="bar-outer"><div class="bar-inner" id="xpBar" style="width:0%"></div></div>
+    <!-- TELA DE MAPA (INICIAL) -->
+    <div id="mapScreen">
+      <div class="hint hidden" id="travelBanner"></div>
 
-      <div class="stat-row" style="margin-top:12px;">
-        <span>❤️ Vida</span>
-        <span id="hpText">30 / 30</span>
-      </div>
-      <div class="bar-outer hp-bar"><div class="bar-inner" id="hpBar" style="width:100%"></div></div>
-
-      <div class="stat-row" style="margin-top:12px;">
-        <span>Mana</span>
-        <span id="manaText">10 / 10</span>
-      </div>
-      <div class="bar-outer"><div class="bar-inner mana" id="manaBar" style="width:100%"></div></div>
-    </div>
-
-    <div class="currencies">
-      <div class="currency">
-        <div class="val" id="goldVal">0</div>
-        <div class="lbl">🪙 Moedas de Cobre</div>
-      </div>
-      <div class="currency">
-        <div class="val" id="essenceVal">0</div>
-        <div class="lbl">💎 Essência Arcana</div>
-      </div>
-    </div>
-
-    <button class="cast-btn" onclick="openMap()">🗺️ Ir para o Mapa</button>
-    <div class="log" id="log"></div>
-
-    <div class="hint">
-      Protótipo local — o progresso fica salvo neste navegador/dispositivo.<br>
-      Essência Arcana ainda não é comprável; será a moeda premium (via Pix) na versão final.<br>
-      <a href="#" onclick="resetProgress(); return false;" style="color:#e5615a;">🔄 Resetar progresso (teste)</a>
-    </div>
-  </div>
-
-  <!-- TELA DE MOCHILA -->
-  <div class="hidden creation-screen" id="mochilaScreen">
-    <button class="back-link" onclick="backToMain()">‹ Voltar</button>
-    <div class="subtitle">🎒 Mochila</div>
-
-    <div class="card">
-      <div class="equip-row">
-        <div class="equip-col" id="equipColLeft"></div>
-        <div class="equip-avatar">
-          <svg id="mochilaAvatarSvg" width="120" height="150" viewBox="0 0 140 180"></svg>
+      <div class="map-viewport" id="mapViewport">
+        <div class="map-canvas" id="mapCanvas">
+          <svg class="map-edges" id="mapEdges" width="1000" height="700"></svg>
+          <div id="mapNodes"></div>
         </div>
-        <div class="equip-col" id="equipColRight"></div>
       </div>
-    </div>
+      <div class="hint">Arraste para navegar · pince com 2 dedos para zoom</div>
 
-    <div class="card">
-      <div class="inv-title">📊 Atributos</div>
-      <div class="attr-grid" id="attrGrid"></div>
-    </div>
-
-    <div class="card">
-      <div class="inv-title">Itens</div>
-      <div class="inv-grid5x4" id="invGrid5x4"></div>
-    </div>
-
-    <div class="zone-card hidden" id="slotPickerPanel">
-      <div class="zone-title" id="slotPickerTitle"></div>
-      <div id="slotPickerList"></div>
-      <button class="back-link" onclick="closeSlotPicker()" style="margin-top:6px;">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- TELA DE MAPA -->
-  <div class="hidden creation-screen" id="mapScreen">
-    <button class="back-link" onclick="backToMain()">‹ Voltar</button>
-    <div class="subtitle">Mapa de Arcanum</div>
-
-    <div class="hint hidden" id="travelBanner"></div>
-
-    <div class="map-viewport" id="mapViewport">
-      <div class="map-canvas" id="mapCanvas">
-        <svg class="map-edges" id="mapEdges" width="1000" height="700"></svg>
-        <div id="mapNodes"></div>
-      </div>
-    </div>
-    <div class="hint">Arraste para navegar · pince com 2 dedos para zoom</div>
-
-    <div class="zone-card hidden" id="locationPanel">
-      <div class="zone-title" id="locationTitle"></div>
-      <div class="zone-desc" id="locationDesc"></div>
-      <div class="zone-actions" id="locationActions"></div>
-    </div>
-
-    <div class="zone-card hidden" id="travelConfirmPanel">
-      <div class="zone-title" id="travelConfirmTitle"></div>
-      <div class="zone-desc" id="travelConfirmDesc"></div>
-      <div class="combat-actions">
-        <button class="btn-attack" onclick="confirmTravel()">🧭 Viajar</button>
-        <button class="btn-flee" onclick="cancelTravelConfirm()">Cancelar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TELA DE DERROTA -->
-  <div class="hidden creation-screen" id="defeatScreen">
-    <div class="card" style="text-align:center;">
-      <div style="font-size:2.2rem;">💀</div>
-      <div class="zone-title" style="text-align:center;color:#e5615a;">Derrota</div>
-      <div class="zone-desc" style="text-align:center;" id="defeatGoldMsg"></div>
-      <div class="reward-line" style="font-size:1.3rem;font-weight:bold;" id="defeatTimer">02:00</div>
-      <div class="zone-desc" style="text-align:center;">até reviver na Academia</div>
-      <button class="confirm-btn" id="defeatSkipBtn" onclick="skipDefeatWithEssence()">💎 Reviver agora (3 Essência)</button>
-    </div>
-  </div>
-
-  <!-- TELA DE VITÓRIA -->
-  <div class="hidden creation-screen" id="victoryScreen">
-    <div class="card" style="text-align:center;">
-      <div style="font-size:2.2rem;">🏆</div>
-      <div class="zone-title" style="text-align:center;">Venceu!</div>
-      <div id="victoryRewards" style="margin:14px 0;"></div>
-      <div class="zone-actions" id="victoryActions"></div>
-    </div>
-  </div>
-
-  <!-- TELA DE SELEÇÃO DE MONSTRO -->
-  <div class="hidden creation-screen" id="huntSelectScreen">
-    <button class="back-link" onclick="openMap()">‹ Voltar ao mapa</button>
-    <div class="subtitle" id="huntSelectTitle">Escolha seu alvo</div>
-    <div id="huntMonsterList"></div>
-  </div>
-
-  <!-- TELA DE COMBATE -->
-  <div class="hidden creation-screen" id="combatScreen">
-    <button class="back-link" id="combatBackBtn" onclick="openMap()">‹ Voltar ao mapa</button>
-    <div class="card">
-      <div class="combat-vs">
-        <div class="combat-side">
-          <div class="cicon" id="playerCombatIcon">🧙</div>
-          <div class="cname">Você</div>
-          <div class="bar-outer hp-bar" style="max-width:120px;margin:0 auto;"><div class="bar-inner" id="combatPlayerHpBar" style="width:100%"></div></div>
-          <div class="combat-stat-text">❤️ <span id="combatPlayerHpText">30/30</span></div>
-          <div class="bar-outer" style="max-width:120px;margin:4px auto 0;"><div class="bar-inner mana" id="combatPlayerManaBar" style="width:100%"></div></div>
-          <div class="combat-stat-text">🔵 <span id="combatPlayerManaText">10/10</span></div>
+      <div class="currencies" style="margin-top:10px;">
+        <div class="currency">
+          <div class="val" id="goldVal">0</div>
+          <div class="lbl">🪙 Moedas de Cobre</div>
         </div>
-        <div style="font-size:1.3rem;">⚔️</div>
-        <div class="combat-side">
-          <div class="cicon" id="enemyIcon">👾</div>
-          <div class="cname" id="enemyName">Inimigo</div>
-          <div class="bar-outer hp-bar" style="max-width:120px;margin:0 auto;"><div class="bar-inner" id="enemyHpBar" style="width:100%"></div></div>
-          <div class="combat-stat-text"><span id="enemyHpText">0/0</span></div>
+        <div class="currency">
+          <div class="val" id="essenceVal">0</div>
+          <div class="lbl">💎 Essência Arcana</div>
         </div>
       </div>
 
-      <div class="combat-actions">
-        <button class="btn-attack" onclick="playerAttack()">⚔️ Atacar</button>
-        <button class="btn-spell" id="spellBtn" onclick="playerCastSpell()">🔮 Feitiço (3 mana)</button>
-        <button class="btn-flee" id="potionBtn" onclick="toggleCombatPotionList()">🧪 Poção</button>
-        <button class="btn-flee" onclick="fleeCombat()">🏃 Fugir</button>
+      <div class="log" id="log" style="margin-top:8px;"></div>
+
+      <div class="zone-card hidden" id="locationPanel" style="margin-top:10px;">
+        <div class="zone-title" id="locationTitle"></div>
+        <div class="zone-desc" id="locationDesc"></div>
+        <div class="zone-actions" id="locationActions"></div>
       </div>
 
-      <div class="hidden" id="combatPotionList"></div>
-
-      <div class="combat-log" id="combatLog"></div>
-    </div>
-  </div>
-
-  <!-- TELA DE NPC DE MISSÃO -->
-  <div class="hidden creation-screen" id="npcScreen">
-    <button class="back-link" onclick="openMap()">‹ Voltar ao mapa</button>
-    <div class="card">
-      <div class="zone-title">📜 Mestre Aldric</div>
-      <div class="zone-desc" id="npcDialogue">Saudação, aprendiz.</div>
-      <div class="quest-reward-box" id="npcRewardBox">
-        🎁 <b>Recompensa da Missão:</b><br>
-        • 🪙 +30 Moedas de Cobre<br>
-        • 💎 +2 Essências Arcanas<br>
-        • ✨ +25 XP
+      <div class="zone-card hidden" id="travelConfirmPanel" style="margin-top:10px;">
+        <div class="zone-title" id="travelConfirmTitle"></div>
+        <div class="zone-desc" id="travelConfirmDesc"></div>
+        <div class="combat-actions">
+          <button class="btn-attack" onclick="confirmTravel()">🧭 Viajar</button>
+          <button class="btn-flee" onclick="cancelTravelConfirm()">Cancelar</button>
+        </div>
       </div>
-      <button class="confirm-btn" id="npcActionBtn" onclick="npcAction()">Aceitar Missão</button>
-    </div>
-  </div>
-
-  <!-- TELA DE MERCADOR -->
-  <div class="hidden creation-screen" id="merchantScreen">
-    <button class="back-link" onclick="openMap()">‹ Voltar ao mapa</button>
-    <div class="card">
-      <div class="zone-title">🛒 Mercador Ithren</div>
-      <div class="zone-desc">"Boas relíquias, bom preço. Dê uma olhada."</div>
-      <div id="merchantList"></div>
-    </div>
-
-    <div class="zone-card hidden" id="buyQtyPanel">
-      <div class="zone-title" id="buyQtyTitle"></div>
-      <div class="qty-row">
-        <button class="qty-btn" onclick="changeBuyQty(-1)">−</button>
-        <input type="number" id="buyQtyInput" min="1" value="1" oninput="onBuyQtyInput()">
-        <button class="qty-btn" onclick="changeBuyQty(1)">+</button>
-        <button class="qty-max-btn" onclick="setBuyQtyMax()">Máx</button>
+      
+      <div class="hint" style="margin-top:12px;">
+        <a href="#" onclick="resetProgress(); return false;" style="color:#e5615a;">🔄 Resetar progresso (teste)</a>
       </div>
-      <div class="hint" id="buyQtyTotal"></div>
-      <button class="confirm-btn" onclick="confirmBuyQty()">Comprar</button>
-      <button class="back-link" onclick="closeBuyQtyPanel()">Cancelar</button>
     </div>
+
+    <!-- TELA DE MOCHILA -->
+    <div class="hidden creation-screen" id="mochilaScreen">
+      <div class="card">
+        <div class="equip-row">
+          <div class="equip-col" id="equipColLeft"></div>
+          <div class="equip-avatar">
+            <svg id="mochilaAvatarSvg" width="120" height="150" viewBox="0 0 140 180"></svg>
+          </div>
+          <div class="equip-col" id="equipColRight"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="inv-title">📊 Atributos</div>
+        <div class="attr-grid" id="attrGrid"></div>
+      </div>
+
+      <div class="card">
+        <div class="inv-title">Itens</div>
+        <div class="inv-grid5x4" id="invGrid5x4"></div>
+      </div>
+
+      <div class="zone-card hidden" id="slotPickerPanel">
+        <div class="zone-title" id="slotPickerTitle"></div>
+        <div id="slotPickerList"></div>
+        <button class="back-link" onclick="closeSlotPicker()" style="margin-top:6px;">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- TELA DE SELEÇÃO DE MONSTRO -->
+    <div class="hidden creation-screen" id="huntSelectScreen">
+      <button class="back-link" onclick="openMap()">‹ Voltar ao mapa</button>
+      <div class="subtitle" id="huntSelectTitle">Escolha seu alvo</div>
+      <div id="huntMonsterList"></div>
+    </div>
+
+    <!-- TELA DE COMBATE -->
+    <div class="hidden creation-screen" id="combatScreen">
+      <button class="back-link" id="combatBackBtn" onclick="openMap()">‹ Voltar ao mapa</button>
+      <div class="card">
+        <div class="combat-vs">
+          <div class="combat-side">
+            <div class="cicon" id="playerCombatIcon">🧙</div>
+            <div class="cname">Você</div>
+            <div class="bar-outer bar-hp" style="max-width:120px;margin:0 auto;"><div class="bar-inner bar-hp" id="combatPlayerHpBar" style="width:100%"></div></div>
+            <div class="combat-stat-text">❤️ <span id="combatPlayerHpText">30/30</span></div>
+            <div class="bar-outer" style="max-width:120px;margin:4px auto 0;"><div class="bar-inner bar-mana" id="combatPlayerManaBar" style="width:100%"></div></div>
+            <div class="combat-stat-text">🔵 <span id="combatPlayerManaText">10/10</span></div>
+          </div>
+          <div style="font-size:1.3rem;">⚔️</div>
+          <div class="combat-side">
+            <div class="cicon" id="enemyIcon">👾</div>
+            <div class="cname" id="enemyName">Inimigo</div>
+            <div class="bar-outer" style="max-width:120px;margin:0 auto;"><div class="bar-inner bar-hp" id="enemyHpBar" style="width:100%"></div></div>
+            <div class="combat-stat-text"><span id="enemyHpText">0/0</span></div>
+          </div>
+        </div>
+
+        <div class="combat-actions">
+          <button class="btn-attack" onclick="playerAttack()">⚔️ Atacar</button>
+          <button class="btn-spell" id="spellBtn" onclick="playerCastSpell()">🔮 Feitiço (3 mana)</button>
+          <button class="btn-flee" id="potionBtn" onclick="toggleCombatPotionList()">🧪 Poção</button>
+          <button class="btn-flee" onclick="fleeCombat()">🏃 Fugir</button>
+        </div>
+
+        <div class="hidden" id="combatPotionList"></div>
+
+        <div class="combat-log" id="combatLog"></div>
+      </div>
+    </div>
+
+    <!-- TELA DE NPC DE MISSÃO -->
+    <div class="hidden creation-screen" id="npcScreen">
+      <button class="back-link" onclick="openMap()">‹ Voltar ao mapa</button>
+      <div class="card">
+        <div class="zone-title">📜 Mestre Aldric</div>
+        <div class="zone-desc" id="npcDialogue">Saudação, aprendiz.</div>
+        <div class="quest-reward-box" id="npcRewardBox">
+          🎁 <b>Recompensa da Missão:</b><br>
+          • 🪙 +30 Moedas de Cobre<br>
+          • 💎 +2 Essências Arcanas<br>
+          • ✨ +25 XP
+        </div>
+        <button class="confirm-btn" id="npcActionBtn" onclick="npcAction()">Aceitar Missão</button>
+      </div>
+    </div>
+
+    <!-- TELA DE MERCADOR -->
+    <div class="hidden creation-screen" id="merchantScreen">
+      <button class="back-link" onclick="openMap()">‹ Voltar ao mapa</button>
+      <div class="card">
+        <div class="zone-title">🛒 Mercador Ithren</div>
+        <div class="zone-desc">"Boas relíquias, bom preço. Dê uma olhada."</div>
+        <div id="merchantList"></div>
+      </div>
+
+      <div class="zone-card hidden" id="buyQtyPanel">
+        <div class="zone-title" id="buyQtyTitle"></div>
+        <div class="qty-row">
+          <button class="qty-btn" onclick="changeBuyQty(-1)">−</button>
+          <input type="number" id="buyQtyInput" min="1" value="1" oninput="onBuyQtyInput()">
+          <button class="qty-btn" onclick="changeBuyQty(1)">+</button>
+          <button class="qty-max-btn" onclick="setBuyQtyMax()">Máx</button>
+        </div>
+        <div class="hint" id="buyQtyTotal"></div>
+        <button class="confirm-btn" onclick="confirmBuyQty()">Comprar</button>
+        <button class="back-link" onclick="closeBuyQtyPanel()">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- TELA DE DERROTA -->
+    <div class="hidden creation-screen" id="defeatScreen">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.2rem;">💀</div>
+        <div class="zone-title" style="text-align:center;color:#e5615a;">Derrota</div>
+        <div class="zone-desc" style="text-align:center;" id="defeatGoldMsg"></div>
+        <div class="reward-line" style="font-size:1.3rem;font-weight:bold;" id="defeatTimer">02:00</div>
+        <div class="zone-desc" style="text-align:center;">até reviver na Academia</div>
+        <button class="confirm-btn" id="defeatSkipBtn" onclick="skipDefeatWithEssence()">💎 Reviver agora (3 Essência)</button>
+      </div>
+    </div>
+
+    <!-- TELA DE VITÓRIA -->
+    <div class="hidden creation-screen" id="victoryScreen">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2.2rem;">🏆</div>
+        <div class="zone-title" style="text-align:center;">Venceu!</div>
+        <div id="victoryRewards" style="margin:14px 0;"></div>
+        <div class="zone-actions" id="victoryActions"></div>
+      </div>
+    </div>
+
   </div>
 
   <div id="toastContainer"></div>
 </div>
 
 <script>
-  // --- Integração básica com o Telegram Web App ---
+  // --- Telegram Web App Integration ---
   let tg = window.Telegram ? window.Telegram.WebApp : null;
   if (tg) {
     tg.ready();
@@ -978,7 +933,7 @@
     document.body.style.background = tg.themeParams.bg_color || "";
   }
 
-  // --- Estado do jogo ---
+  // --- Estado do Jogo ---
   const STORAGE_KEY = "arcanum_save";
 
   const ITEMS = [
@@ -993,7 +948,7 @@
     { id: "chapeu_aprendiz", name: "Chapéu de Aprendiz", icon: "🎩", slot: "chapeu", stats: { defense: 1 } },
     { id: "tunica_simples", name: "Túnica Simples", icon: "👕", slot: "roupa", stats: { defense: 2 } },
     { id: "botas_surradas", name: "Botas Surradas", icon: "👢", slot: "sapatos", stats: { dodge: 2 } },
-    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "FC", slot: "capa", stats: { penetration: 3 } },
+    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "🧣", slot: "capa", stats: { penetration: 3 } },
     { id: "colar_simples", name: "Colar Simples", icon: "📿", slot: "colar", stats: { luck: 3 } },
     { id: "anel_cobre", name: "Anel de Cobre", icon: "💍", slot: "anel", stats: { crit: 3 } },
     { id: "adaga_treino", name: "Adaga de Treino", icon: "🗡️", slot: "arma_secundaria", stats: { attack: 1 } },
@@ -1011,9 +966,8 @@
     return total;
   }
 
-  // --- VALORES DE TESTE FACILITADOS ---
-  const BASE_CRIT = 50;  // Teste: 50%
-  const BASE_DODGE = 50; // Teste: 50%
+  const BASE_CRIT = 50;
+  const BASE_DODGE = 50;
   const BASE_PENETRATION = 0;
   const BASE_LUCK = 0;
   const BASE_HP_REGEN = 2;
@@ -1166,20 +1120,27 @@
   let state = loadState();
   recalcStats();
 
+  // ATUALIZAÇÃO DO HEADER FIXO NO TOPO
   function render() {
     const houseObj = HOUSES.find(h => h.id === state.house);
-    const tagline = document.getElementById("playerTagline");
-    tagline.textContent =
-      (state.name || "Aprendiz") + " · " + (state.gender === "f" ? "Feminino" : "Masculino") +
-      (houseObj ? " · " + houseObj.icon + " " + houseObj.name : "");
-    tagline.style.color = houseObj ? houseObj.color : "";
-    document.getElementById("levelVal").textContent = state.level;
-    document.getElementById("xpText").textContent = state.xp + " / " + state.xpToNext + " XP";
-    document.getElementById("xpBar").style.width = Math.min(100, (state.xp / state.xpToNext) * 100) + "%";
-    document.getElementById("hpText").textContent = state.hp + " / " + state.hpMax;
-    document.getElementById("hpBar").style.width = (state.hp / state.hpMax) * 100 + "%";
-    document.getElementById("manaText").textContent = state.mana + " / " + state.manaMax;
-    document.getElementById("manaBar").style.width = (state.mana / state.manaMax) * 100 + "%";
+    
+    document.getElementById("hdrPlayerName").textContent = state.name || "Aprendiz";
+    document.getElementById("hdrHouse").textContent = houseObj ? houseObj.icon + " " + houseObj.name : "Sem Casa";
+    if (houseObj) document.getElementById("hdrHouse").style.color = houseObj.color;
+    document.getElementById("hdrLevel").textContent = "LV. " + state.level;
+
+    // 1. HP
+    document.getElementById("hdrHpText").textContent = state.hp + " / " + state.hpMax;
+    document.getElementById("hdrHpBar").style.width = Math.max(0, (state.hp / state.hpMax) * 100) + "%";
+
+    // 2. Mana
+    document.getElementById("hdrManaText").textContent = state.mana + " / " + state.manaMax;
+    document.getElementById("hdrManaBar").style.width = Math.max(0, (state.mana / state.manaMax) * 100) + "%";
+
+    // 3. XP
+    document.getElementById("hdrXpText").textContent = state.xp + " / " + state.xpToNext;
+    document.getElementById("hdrXpBar").style.width = Math.min(100, (state.xp / state.xpToNext) * 100) + "%";
+
     document.getElementById("goldVal").textContent = state.gold;
     document.getElementById("essenceVal").textContent = state.essence;
 
@@ -1352,7 +1313,7 @@
       statusEl.className = "nick-status bad";
       nickAvailable = false;
     } else {
-      statusEl.textContent = "✓ Nickname disponível (verificação local — sem servidor ainda)";
+      statusEl.textContent = "✓ Nickname disponível";
       statusEl.className = "nick-status ok";
       nickAvailable = true;
       state.name = val;
@@ -1489,8 +1450,8 @@
     state.mana = state.manaMax;
     saveState();
     document.getElementById("houseScreen").classList.add("hidden");
-    document.getElementById("mainApp").classList.remove("hidden");
-    render();
+    document.getElementById("gameContainer").classList.remove("hidden");
+    openMap();
   }
 
   function houseBonusMultiplier(statKey) {
@@ -1516,11 +1477,11 @@
     if (state.characterCreated && state.house) {
       document.getElementById("creationScreen").classList.add("hidden");
       document.getElementById("houseScreen").classList.add("hidden");
+      document.getElementById("gameContainer").classList.remove("hidden");
       if (isDefeated()) {
-        document.getElementById("mainApp").classList.add("hidden");
         showDefeatScreen(0);
       } else {
-        document.getElementById("mainApp").classList.remove("hidden");
+        openMap();
       }
     } else if (state.characterCreated && !state.house) {
       document.getElementById("creationScreen").classList.add("hidden");
@@ -1542,7 +1503,7 @@
 
   function navClick(target) {
     if (target === "mochila") {
-      hideAllScreens();
+      hideSubScreens();
       document.getElementById("mochilaScreen").classList.remove("hidden");
       document.getElementById("slotPickerPanel").classList.add("hidden");
       renderInventory();
@@ -1557,7 +1518,8 @@
   }
 
   function log(msg) {
-    document.getElementById("log").textContent = msg;
+    const logEl = document.getElementById("log");
+    if (logEl) logEl.textContent = msg;
   }
 
   function grantVictoryRewards(baseXp, baseGold) {
@@ -1598,18 +1560,10 @@
     return result;
   }
 
-  // ---------- TELAS & NAVEGAÇÃO ----------
-  function hideAllScreens() {
-    ["mainApp", "mapScreen", "combatScreen", "npcScreen", "merchantScreen", "mochilaScreen", "huntSelectScreen", "victoryScreen", "defeatScreen"].forEach(id => {
+  function hideSubScreens() {
+    ["mapScreen", "mochilaScreen", "combatScreen", "npcScreen", "merchantScreen", "huntSelectScreen", "victoryScreen", "defeatScreen"].forEach(id => {
       document.getElementById(id).classList.add("hidden");
     });
-  }
-
-  function backToMain() {
-    if (isDefeated()) { showDefeatScreen(0); return; }
-    hideAllScreens();
-    document.getElementById("mainApp").classList.remove("hidden");
-    render();
   }
 
   // ---------- MAPA INTERATIVO ----------
@@ -1641,7 +1595,7 @@
 
   function openMap() {
     if (isDefeated()) { showDefeatScreen(0); return; }
-    hideAllScreens();
+    hideSubScreens();
     document.getElementById("mapScreen").classList.remove("hidden");
     document.getElementById("travelConfirmPanel").classList.add("hidden");
     pendingTravelTarget = null;
@@ -1655,6 +1609,7 @@
     } else {
       document.getElementById("locationPanel").classList.add("hidden");
     }
+    render();
   }
 
   function renderMapNodes() {
@@ -1915,7 +1870,7 @@
   function openHuntSelect(locationId) {
     if (isDefeated()) { showDefeatScreen(0); return; }
     huntLocationId = locationId;
-    hideAllScreens();
+    hideSubScreens();
     document.getElementById("huntSelectScreen").classList.remove("hidden");
     renderHuntSelect();
   }
@@ -1970,12 +1925,11 @@
       isBoss: isBoss
     };
     combatLogEntries = [];
-    hideAllScreens();
+    hideSubScreens();
     document.getElementById("combatScreen").classList.remove("hidden");
     document.getElementById("combatPotionList").classList.add("hidden");
     document.getElementById("enemyName").textContent = combat.name;
     document.getElementById("enemyIcon").textContent = combat.icon;
-    document.getElementById("combatBackBtn").classList.remove("hidden");
     renderCombat();
     combatLog("Um " + combat.icon + " " + combat.name + " apareceu!", "system");
   }
@@ -1990,6 +1944,7 @@
     document.getElementById("spellBtn").disabled = state.mana < 3;
     const hasPotions = POTIONS.some(p => (state.inventory[p.id] || 0) > 0);
     document.getElementById("potionBtn").disabled = !hasPotions;
+    render();
   }
 
   function toggleCombatPotionList() {
@@ -2136,7 +2091,7 @@
   }
 
   function showVictoryScreen(rewards, wasBoss) {
-    hideAllScreens();
+    hideSubScreens();
     document.getElementById("victoryScreen").classList.remove("hidden");
 
     let rewardsHtml =
@@ -2162,7 +2117,6 @@
     }
   }
 
-  // --- TEMPO DE MORTE DE TESTE ---
   const DEFEAT_MS = 5 * 1000;
   const DEFEAT_SKIP_COST = 3;
 
@@ -2181,7 +2135,7 @@
   }
 
   function showDefeatScreen(goldLoss) {
-    hideAllScreens();
+    hideSubScreens();
     document.getElementById("defeatScreen").classList.remove("hidden");
     document.getElementById("defeatGoldMsg").textContent =
       goldLoss > 0 ? "Perdeu 🪙 " + goldLoss + " Moedas de Cobre na derrota." : "Nenhuma moeda foi perdida.";
@@ -2217,22 +2171,20 @@
     state.travelTarget = null;
     state.travelArrivesAt = 0;
     saveState();
-    hideAllScreens();
-    document.getElementById("mainApp").classList.remove("hidden");
-    render();
+    openMap();
     log("Você reviveu na Academia.");
   }
 
   function fleeCombat() {
     combat = null;
-    backToMain();
+    openMap();
     log("Você fugiu do combate.");
   }
 
   // ---------- NPC DE MISSÃO ----------
   function openNpc() {
     if (isDefeated()) { showDefeatScreen(0); return; }
-    hideAllScreens();
+    hideSubScreens();
     document.getElementById("npcScreen").classList.remove("hidden");
     renderNpc();
   }
@@ -2320,7 +2272,7 @@
 
   function openMerchant() {
     if (isDefeated()) { showDefeatScreen(0); return; }
-    hideAllScreens();
+    hideSubScreens();
     document.getElementById("merchantScreen").classList.remove("hidden");
     document.getElementById("buyQtyPanel").classList.add("hidden");
     renderMerchant();
@@ -2479,7 +2431,7 @@
     log("🧪 Bebeu " + result.def.name + " e recuperou " + result.amountApplied + " de " + (result.def.type === "heal" ? "HP" : "Mana") + ".");
   }
 
-  // --- REGENERAÇÃO DE MANA & TIMERS DA TELA ---
+  // --- REGENERAÇÃO DE MANA & TIMERS ---
   const BASE_REGEN_MS = 10000;
   const MIN_REGEN_MS = 3000;
   let regenAccumulator = 0;
