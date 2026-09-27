@@ -96,28 +96,6 @@
   .bar-mana { background: linear-gradient(90deg, #3a7bd5, #5aa8f0); }
   .bar-xp { background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
 
-  .name-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  .name-row input {
-    flex: 1;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid var(--purple);
-    color: var(--text);
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 1rem;
-  }
-  .name-row button {
-    background: var(--purple);
-    border: none;
-    color: white;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 0.9rem;
-  }
   .currencies {
     display: flex;
     justify-content: space-between;
@@ -180,6 +158,7 @@
   }
   .upgrade-buy.essence-cost { background: linear-gradient(135deg, #c9962f, #e8c15a); color: #2a1a00; }
   .upgrade-buy:disabled { opacity: 0.35; }
+  
   .creation-screen {
     display: flex;
     flex-direction: column;
@@ -288,9 +267,11 @@
   .house-info .hname { font-weight: bold; font-size: 1rem; }
   .house-info .hdesc { font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 2px; }
   .house-info .hbuff { font-size: 0.72rem; color: var(--gold); margin-top: 4px; }
+  
+  /* MENU DE NAVEGAÇÃO */
   .top-nav {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     margin-bottom: 4px;
   }
   .nav-btn {
@@ -298,16 +279,71 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 12px;
-    padding: 8px 4px;
+    padding: 6px 2px;
     color: var(--text);
   }
   .nav-btn:active { background: rgba(255,255,255,0.1); }
-  .nav-btn .nav-icon { font-size: 1.3rem; line-height: 1; }
-  .nav-btn .nav-label { font-size: 0.65rem; color: rgba(255,255,255,0.7); }
+  .nav-btn .nav-icon { font-size: 1.2rem; line-height: 1; }
+  .nav-btn .nav-label { font-size: 0.6rem; color: rgba(255,255,255,0.7); white-space: nowrap; }
+
+  /* ESTILOS DE CRAFTING */
+  .craft-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .craft-tab-btn {
+    flex: 1;
+    padding: 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text);
+  }
+  .craft-tab-btn.active {
+    background: var(--purple);
+    border-color: var(--purple-light);
+  }
+  .craft-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .craft-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .craft-title {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--gold);
+  }
+  .craft-reqs {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 6px 0;
+  }
+  .req-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .req-item.ok { color: var(--green); }
+  .req-item.missing { color: #e5615a; }
+
   .zone-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(232,193,90,0.2);
@@ -736,6 +772,10 @@
         <span class="nav-icon">⚔️</span>
         <span class="nav-label">Habilidades</span>
       </button>
+      <button class="nav-btn" onclick="navClick('criacao')">
+        <span class="nav-icon">⚒️</span>
+        <span class="nav-label">Criação</span>
+      </button>
       <button class="nav-btn" onclick="navClick('social')">
         <span class="nav-icon">👥</span>
         <span class="nav-label">Social</span>
@@ -813,6 +853,18 @@
         <div class="zone-title" id="slotPickerTitle"></div>
         <div id="slotPickerList"></div>
         <button class="back-link" onclick="closeSlotPicker()" style="margin-top:6px;">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- TELA DE CRIAÇÃO (CRAFTING) -->
+    <div class="hidden creation-screen" id="criacaoScreen">
+      <div class="card">
+        <div class="inv-title">⚒️ Borda de Alquimia e Forja</div>
+        <div class="craft-tabs">
+          <button class="craft-tab-btn active" id="craftTabPotions" onclick="setCraftCategory('potions')">🧪 Poções</button>
+          <button class="craft-tab-btn" id="craftTabEquip" onclick="setCraftCategory('equip')">🛡️ Equipamentos</button>
+        </div>
+        <div id="craftRecipesList"></div>
       </div>
     </div>
 
@@ -948,7 +1000,7 @@
     { id: "chapeu_aprendiz", name: "Chapéu de Aprendiz", icon: "🎩", slot: "chapeu", stats: { defense: 1 } },
     { id: "tunica_simples", name: "Túnica Simples", icon: "👕", slot: "roupa", stats: { defense: 2 } },
     { id: "botas_surradas", name: "Botas Surradas", icon: "👢", slot: "sapatos", stats: { dodge: 2 } },
-    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "scarf", slot: "capa", stats: { penetration: 3 } },
+    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "🧣", slot: "capa", stats: { penetration: 3 } },
     { id: "colar_simples", name: "Colar Simples", icon: "📿", slot: "colar", stats: { luck: 3 } },
     { id: "anel_cobre", name: "Anel de Cobre", icon: "💍", slot: "anel", stats: { crit: 3 } },
     { id: "adaga_treino", name: "Adaga de Treino", icon: "🗡️", slot: "arma_secundaria", stats: { attack: 1 } },
@@ -1509,6 +1561,12 @@
       renderInventory();
       return;
     }
+    if (target === "criacao") {
+      hideSubScreens();
+      document.getElementById("criacaoScreen").classList.remove("hidden");
+      renderCrafting();
+      return;
+    }
     if (target === "mapa") {
       openMap();
       return;
@@ -1561,7 +1619,7 @@
   }
 
   function hideSubScreens() {
-    ["mapScreen", "mochilaScreen", "combatScreen", "npcScreen", "merchantScreen", "huntSelectScreen", "victoryScreen", "defeatScreen"].forEach(id => {
+    ["mapScreen", "mochilaScreen", "criacaoScreen", "combatScreen", "npcScreen", "merchantScreen", "huntSelectScreen", "victoryScreen", "defeatScreen"].forEach(id => {
       document.getElementById(id).classList.add("hidden");
     });
   }
@@ -1598,7 +1656,6 @@
     if (!viewport) return;
     const rect = viewport.getBoundingClientRect();
     
-    // Considera a altura útil do mapa expandida com margem inferior para os rótulos de texto
     const mapWidthVirtual = 1000;
     const mapHeightVirtual = 760; 
 
@@ -1884,6 +1941,148 @@
     log("Você descansou na Academia. HP e Mana totalmente recuperados.");
     const descEl = document.getElementById("locationDesc");
     if (descEl) descEl.textContent = "✅ HP e Mana totalmente recuperados!";
+  }
+
+  // ---------- SISTEMA DE CRAFTING (CRIAÇÃO) ----------
+  let currentCraftCategory = "potions";
+
+  const CRAFT_RECIPES = [
+    // POÇÕES
+    {
+      id: "pocao_vida_p",
+      category: "potions",
+      name: "Poção de Vida Pequena",
+      icon: "🧪",
+      desc: "Restaura 40 HP",
+      reqs: { erva_lunar: 2 }
+    },
+    {
+      id: "pocao_mana_p",
+      category: "potions",
+      name: "Poção de Mana Pequena",
+      icon: "🧪",
+      desc: "Restaura 10 Mana",
+      reqs: { po_estelar: 2 }
+    },
+    {
+      id: "pocao_vida_g",
+      category: "potions",
+      name: "Poção de Vida Grande",
+      icon: "🧪",
+      desc: "Restaura 80 HP",
+      reqs: { erva_lunar: 4, cristal_arcano: 1 }
+    },
+    {
+      id: "pocao_mana_g",
+      category: "potions",
+      name: "Poção de Mana Grande",
+      icon: "🧪",
+      desc: "Restaura 20 Mana",
+      reqs: { po_estelar: 4, cristal_arcano: 1 }
+    },
+
+    // EQUIPAMENTOS
+    {
+      id: "capa_iniciante",
+      category: "equip",
+      name: "Capa de Iniciante",
+      icon: "🧣",
+      desc: "+3 Penetração de Armadura",
+      reqs: { po_estelar: 3, erva_lunar: 2 }
+    },
+    {
+      id: "colar_simples",
+      category: "equip",
+      name: "Colar Simples",
+      icon: "📿",
+      desc: "+3% Sorte",
+      reqs: { cristal_arcano: 2 }
+    },
+    {
+      id: "anel_cobre",
+      category: "equip",
+      name: "Anel de Cobre",
+      icon: "💍",
+      desc: "+3% Crítico",
+      reqs: { cristal_arcano: 1, po_estelar: 3 }
+    }
+  ];
+
+  function setCraftCategory(cat) {
+    currentCraftCategory = cat;
+    document.getElementById("craftTabPotions").classList.toggle("active", cat === "potions");
+    document.getElementById("craftTabEquip").classList.toggle("active", cat === "equip");
+    renderCrafting();
+  }
+
+  function renderCrafting() {
+    const container = document.getElementById("craftRecipesList");
+    container.innerHTML = "";
+
+    const recipes = CRAFT_RECIPES.filter(r => r.category === currentCraftCategory);
+
+    recipes.forEach(recipe => {
+      let canCraft = true;
+      let reqsHtml = "";
+
+      Object.keys(recipe.reqs).forEach(matId => {
+        const needed = recipe.reqs[matId];
+        const owned = state.inventory[matId] || 0;
+        const matDef = findItemDef(matId) || { name: matId, icon: "📦" };
+        const hasEnough = owned >= needed;
+
+        if (!hasEnough) canCraft = false;
+
+        reqsHtml +=
+          '<span class="req-item ' + (hasEnough ? 'ok' : 'missing') + '">' +
+            matDef.icon + ' ' + matDef.name + ': ' + owned + '/' + needed +
+          '</span>';
+      });
+
+      const card = document.createElement("div");
+      card.className = "craft-card";
+      card.innerHTML =
+        '<div class="craft-header">' +
+          '<span style="font-size:1.5rem;">' + recipe.icon + '</span>' +
+          '<div style="flex:1;">' +
+            '<div class="craft-title">' + recipe.name + '</div>' +
+            '<div style="font-size:0.75rem; color:rgba(255,255,255,0.6);">' + recipe.desc + '</div>' +
+          '</div>' +
+          '<button class="upgrade-buy" ' + (canCraft ? '' : 'disabled') + ' onclick="craftItem(\'' + recipe.id + '\')">Fabricar</button>' +
+        '</div>' +
+        '<div class="craft-reqs">' + reqsHtml + '</div>';
+
+      container.appendChild(card);
+    });
+  }
+
+  function craftItem(recipeId) {
+    const recipe = CRAFT_RECIPES.find(r => r.id === recipeId);
+    if (!recipe) return;
+
+    // Verificar se possui os ingredientes
+    for (const matId of Object.keys(recipe.reqs)) {
+      const needed = recipe.reqs[matId];
+      if ((state.inventory[matId] || 0) < needed) {
+        showToast("❌ Recursos insuficientes!");
+        return;
+      }
+    }
+
+    // Consumir os ingredientes
+    for (const matId of Object.keys(recipe.reqs)) {
+      const needed = recipe.reqs[matId];
+      state.inventory[matId] -= needed;
+      if (state.inventory[matId] <= 0) delete state.inventory[matId];
+    }
+
+    // Adicionar o item criado
+    state.inventory[recipe.id] = (state.inventory[recipe.id] || 0) + 1;
+
+    saveState();
+    render();
+    renderCrafting();
+    showToast("✨ Criado com sucesso: " + recipe.name);
   }
 
   // ---------- COMBATE E INIMIGOS ----------
