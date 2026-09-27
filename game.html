@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Arcane Academy</title>
+<title>Arcanum</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
   :root {
@@ -124,7 +124,6 @@
     background: linear-gradient(135deg, var(--purple), #4b2a99);
     color: white;
     box-shadow: 0 4px 14px rgba(125,79,214,0.5);
-    active-opacity: 0.8;
   }
   .cast-btn:active { transform: scale(0.97); }
   .log {
@@ -337,6 +336,15 @@
   }
   .zone-title { font-size: 1.05rem; color: var(--gold); margin-bottom: 4px; }
   .zone-desc { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-bottom: 12px; }
+  .quest-reward-box {
+    background: rgba(232,193,90,0.1);
+    border: 1px dashed var(--gold);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin: 10px 0;
+    font-size: 0.8rem;
+    color: var(--gold);
+  }
   .zone-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -730,7 +738,7 @@
 
   <!-- APP PRINCIPAL DO JOGO -->
   <div class="hidden" id="mainApp">
-    <div class="subtitle" id="playerTagline">Protótipo v0.1 — clicker de treino mágico</div>
+    <div class="subtitle" id="playerTagline">Protótipo v0.1 — Arcanum</div>
 
     <div class="top-nav">
       <button class="nav-btn" onclick="navClick('mapa')">
@@ -925,6 +933,12 @@
     <div class="card">
       <div class="zone-title">📜 Mestre Aldric</div>
       <div class="zone-desc" id="npcDialogue">Saudação, aprendiz.</div>
+      <div class="quest-reward-box" id="npcRewardBox">
+        🎁 <b>Recompensa da Missão:</b><br>
+        • 🪙 +30 Moedas de Cobre<br>
+        • 💎 +2 Essências Arcanas<br>
+        • ✨ +25 XP
+      </div>
       <button class="confirm-btn" id="npcActionBtn" onclick="npcAction()">Aceitar Missão</button>
     </div>
   </div>
@@ -964,8 +978,8 @@
     document.body.style.background = tg.themeParams.bg_color || "";
   }
 
-  // --- Estado do jogo (salvo no localStorage por enquanto) ---
-  const STORAGE_KEY = "academia_arcana_save";
+  // --- Estado do jogo ---
+  const STORAGE_KEY = "arcanum_save";
 
   const ITEMS = [
     { id: "erva_lunar",    name: "Erva Lunar",     icon: "🌿", rarity: "comum", weight: 50 },
@@ -973,13 +987,13 @@
     { id: "cristal_arcano",name: "Cristal Arcano", icon: "🔹", rarity: "raro",  weight: 15 },
     { id: "pena_fenix",    name: "Pena de Fênix",  icon: "🪶", rarity: "epico", weight: 5  }
   ];
-  const DROP_CHANCE = 0.3; // 30% de chance de achar item ao conjurar
+  const DROP_CHANCE = 0.3;
 
   const EQUIP_ITEMS = [
     { id: "chapeu_aprendiz", name: "Chapéu de Aprendiz", icon: "🎩", slot: "chapeu", stats: { defense: 1 } },
     { id: "tunica_simples", name: "Túnica Simples", icon: "👕", slot: "roupa", stats: { defense: 2 } },
     { id: "botas_surradas", name: "Botas Surradas", icon: "👢", slot: "sapatos", stats: { dodge: 2 } },
-    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "🧣", slot: "capa", stats: { penetration: 3 } },
+    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "FC", slot: "capa", stats: { penetration: 3 } },
     { id: "colar_simples", name: "Colar Simples", icon: "📿", slot: "colar", stats: { luck: 3 } },
     { id: "anel_cobre", name: "Anel de Cobre", icon: "💍", slot: "anel", stats: { crit: 3 } },
     { id: "adaga_treino", name: "Adaga de Treino", icon: "🗡️", slot: "arma_secundaria", stats: { attack: 1 } },
@@ -997,8 +1011,9 @@
     return total;
   }
 
-  const BASE_CRIT = 50; // TESTE: 50% (versão final: 5)
-  const BASE_DODGE = 50; // TESTE: 50% (versão final: 3)
+  // --- VALORES DE TESTE FACILITADOS ---
+  const BASE_CRIT = 50;  // Teste: 50%
+  const BASE_DODGE = 50; // Teste: 50%
   const BASE_PENETRATION = 0;
   const BASE_LUCK = 0;
   const BASE_HP_REGEN = 2;
@@ -1069,8 +1084,8 @@
       baseManaMax: 10,
       houseManaBonus: 0,
       houseLuckBonus: 0,
-      critChance: 5,
-      dodgeChance: 3,
+      critChance: 50,
+      dodgeChance: 50,
       penetration: 0,
       luck: 0,
       hpRegen: 2,
@@ -1111,8 +1126,8 @@
       if (loaded.defeatedUntil === undefined) loaded.defeatedUntil = 0;
       if (loaded.houseManaBonus === undefined) loaded.houseManaBonus = (loaded.house === "noctivia" ? 10 : 0);
       if (loaded.houseLuckBonus === undefined) loaded.houseLuckBonus = (loaded.house === "sibyra" ? 10 : 0);
-      if (loaded.critChance === undefined) loaded.critChance = 5;
-      if (loaded.dodgeChance === undefined) loaded.dodgeChance = 3;
+      if (loaded.critChance === undefined) loaded.critChance = 50;
+      if (loaded.dodgeChance === undefined) loaded.dodgeChance = 50;
       if (loaded.penetration === undefined) loaded.penetration = 0;
       if (loaded.luck === undefined) loaded.luck = 0;
       if (loaded.hpRegen === undefined) loaded.hpRegen = 2;
@@ -1145,7 +1160,7 @@
   function saveState() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch (e) { /* ignora se storage falhar */ }
+    } catch (e) { }
   }
 
   let state = loadState();
@@ -1309,9 +1324,7 @@
   }
 
   // ---------- CRIAÇÃO DE PERSONAGEM ----------
-
-  // Lista simulada de nicknames já usados (sem servidor real ainda)
-  const RESERVED_NICKS = ["admin", "teste", "moderador", "arcaneacademy"];
+  const RESERVED_NICKS = ["admin", "teste", "moderador", "arcanum"];
 
   const PRESETS = [
     { label: "Visual 1", hair: "#7d4fd6", face: "#f2c9a0", hairShape: "wave" },
@@ -1571,7 +1584,7 @@
       recalcStats();
       state.mana = state.manaMax;
       state.hp = state.hpMax;
-      state.essence += 1; // recompensa de nível: essência arcana
+      state.essence += 1;
       result.leveledUp = true;
       result.newLevel = state.level;
     }
@@ -1585,8 +1598,7 @@
     return result;
   }
 
-  // ---------- NAVEGAÇÃO ENTRE TELAS ----------
-
+  // ---------- TELAS & NAVEGAÇÃO ----------
   function hideAllScreens() {
     ["mainApp", "mapScreen", "combatScreen", "npcScreen", "merchantScreen", "mochilaScreen", "huntSelectScreen", "victoryScreen", "defeatScreen"].forEach(id => {
       document.getElementById(id).classList.add("hidden");
@@ -1601,7 +1613,6 @@
   }
 
   // ---------- MAPA INTERATIVO ----------
-
   const LOCATIONS = [
     { id: "academia", name: "Academia", icon: "🏛️", x: 140, y: 480, desc: "O lar seguro dos aprendizes. Aqui você pode descansar.", connections: ["jardins", "vila"], implemented: true },
     { id: "jardins", name: "Jardins da Academia", icon: "🌿", x: 420, y: 280, desc: "A primeira área de treino. Criaturas fracas rondam por aqui.", connections: ["academia", "floresta", "lago"], implemented: true },
@@ -1612,7 +1623,7 @@
     { id: "ruinas", name: "Ruínas Antigas", icon: "🏚️", x: 900, y: 640, desc: "Restos de uma civilização mágica esquecida pelo tempo.", connections: ["floresta", "cavernas"], implemented: false }
   ];
 
-  const TRAVEL_MS = 5 * 1000; // TESTE: 5 segundos (versão final: 5 * 60 * 1000 = 5 minutos)
+  const TRAVEL_MS = 5 * 1000;
 
   function formatDuration(ms) {
     const totalSec = Math.ceil(ms / 1000);
@@ -1747,7 +1758,7 @@
         mapTransform.x = pinchStart.center.x - (pinchStart.center.x - pinchStart.tx) * deltaScale;
         mapTransform.y = pinchStart.center.y - (pinchStart.center.y - pinchStart.ty) * deltaScale;
         mapTransform.scale = newScale;
-        dragDistance = 999; // pinching nunca conta como tap
+        dragDistance = 999;
         applyMapTransform();
       }
     });
@@ -1887,8 +1898,7 @@
     if (descEl) descEl.textContent = "✅ HP e Mana totalmente recuperados!";
   }
 
-  // ---------- INIMIGOS ----------
-
+  // ---------- COMBATE E INIMIGOS ----------
   const LOCATION_MONSTERS = {
     jardins: [
       { id: "rato_arcano", name: "Rato Arcano", icon: "🐀", level: 1, hp: 14, attack: 3, defense: 0, xp: 8, gold: 3, requiredLevel: 1 },
@@ -1899,7 +1909,7 @@
 
   const BOSS = { name: "Corvo Ancestral", icon: "🐦‍⬛", hp: 60, attack: 7, defense: 3, xp: 40, gold: 25, cooldownMs: 20 * 60 * 1000 };
 
-  let combat = null; // { enemy, enemyHp, isBoss }
+  let combat = null;
   let huntLocationId = null;
 
   function openHuntSelect(locationId) {
@@ -1949,7 +1959,6 @@
 
   function beginCombat(def, isBoss) {
     combat = {
-
       name: def.name,
       icon: def.icon,
       hpMax: def.hp,
@@ -2153,8 +2162,9 @@
     }
   }
 
-  const DEFEAT_MS = 5 * 1000; // TESTE: 5 segundos (versão final: 2 * 60 * 1000 = 2 minutos)
-  const DEFEAT_SKIP_COST = 3; // Essência Arcana para reviver na hora
+  // --- TEMPO DE MORTE DE TESTE ---
+  const DEFEAT_MS = 5 * 1000;
+  const DEFEAT_SKIP_COST = 3;
 
   function loseCombat() {
     const goldLoss = Math.min(state.gold, combat.gold);
@@ -2220,7 +2230,6 @@
   }
 
   // ---------- NPC DE MISSÃO ----------
-
   function openNpc() {
     if (isDefeated()) { showDefeatScreen(0); return; }
     hideAllScreens();
@@ -2230,20 +2239,24 @@
 
   function renderNpc() {
     const dialogue = document.getElementById("npcDialogue");
+    const rewardBox = document.getElementById("npcRewardBox");
     const btn = document.getElementById("npcActionBtn");
 
     if (state.questStage === "none") {
       dialogue.textContent = 'Aprendiz, os Jardins estão infestados de Ratos Arcanos. Derrote 3 deles e eu te recompenso bem.';
+      rewardBox.classList.remove("hidden");
       btn.textContent = "Aceitar Missão";
       btn.disabled = false;
       btn.onclick = () => { state.questStage = "hunting"; state.questKills = 0; saveState(); renderNpc(); };
     } else if (state.questStage === "hunting") {
       dialogue.textContent = "Progresso: " + state.questKills + " / 3 Ratos Arcanos derrotados. Volte quando terminar.";
+      rewardBox.classList.remove("hidden");
       btn.textContent = "Voltar para caçar";
       btn.disabled = false;
       btn.onclick = () => openMap();
     } else if (state.questStage === "ready") {
       dialogue.textContent = "Excelente trabalho! Aqui está sua recompensa.";
+      rewardBox.classList.remove("hidden");
       btn.textContent = "Entregar Missão";
       btn.disabled = false;
       btn.onclick = () => {
@@ -2258,13 +2271,13 @@
       };
     } else {
       dialogue.textContent = "Obrigado novamente pela ajuda, aprendiz. Volte sempre que precisar.";
+      rewardBox.classList.add("hidden");
       btn.textContent = "Sem missões no momento";
       btn.disabled = true;
     }
   }
 
   // ---------- MERCADOR ----------
-
   function potionIconSvg(color) {
     return '<svg width="20" height="20" viewBox="0 0 24 24" style="vertical-align:middle">' +
       '<path d="M9 2h6v3l4 8v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-6l4-8V2z" fill="none" stroke="' + color + '" stroke-width="1.5"/>' +
@@ -2466,7 +2479,7 @@
     log("🧪 Bebeu " + result.def.name + " e recuperou " + result.amountApplied + " de " + (result.def.type === "heal" ? "HP" : "Mana") + ".");
   }
 
-  // Regeneração de mana — intervalo dinâmico (afetado pelo upgrade "regen")
+  // --- REGENERAÇÃO DE MANA & TIMERS DA TELA ---
   const BASE_REGEN_MS = 10000;
   const MIN_REGEN_MS = 3000;
   let regenAccumulator = 0;
@@ -2485,7 +2498,6 @@
       }
     }
 
-    // Viagem no mapa
     if (state.travelTarget) {
       const arrivedNow = Date.now() >= state.travelArrivesAt;
       checkTravelArrival();
@@ -2498,7 +2510,6 @@
       }
     }
 
-    // Derrota / reviver
     if (state.defeatedUntil) {
       if (Date.now() >= state.defeatedUntil) {
         revivePlayer();
