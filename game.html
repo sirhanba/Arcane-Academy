@@ -948,7 +948,7 @@
     { id: "chapeu_aprendiz", name: "Chapéu de Aprendiz", icon: "🎩", slot: "chapeu", stats: { defense: 1 } },
     { id: "tunica_simples", name: "Túnica Simples", icon: "👕", slot: "roupa", stats: { defense: 2 } },
     { id: "botas_surradas", name: "Botas Surradas", icon: "👢", slot: "sapatos", stats: { dodge: 2 } },
-    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "🧣", slot: "capa", stats: { penetration: 3 } },
+    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "scarf", slot: "capa", stats: { penetration: 3 } },
     { id: "colar_simples", name: "Colar Simples", icon: "📿", slot: "colar", stats: { luck: 3 } },
     { id: "anel_cobre", name: "Anel de Cobre", icon: "💍", slot: "anel", stats: { crit: 3 } },
     { id: "adaga_treino", name: "Adaga de Treino", icon: "🗡️", slot: "arma_secundaria", stats: { attack: 1 } },
@@ -1597,10 +1597,14 @@
     const viewport = document.getElementById("mapViewport");
     if (!viewport) return;
     const rect = viewport.getBoundingClientRect();
-    const mapW = 1000 * mapTransform.scale;
-    const mapH = 700 * mapTransform.scale;
+    
+    // Considera a altura útil do mapa expandida com margem inferior para os rótulos de texto
+    const mapWidthVirtual = 1000;
+    const mapHeightVirtual = 760; 
 
-    // Limita para que o mapa não suma da janela de visualização
+    const mapW = mapWidthVirtual * mapTransform.scale;
+    const mapH = mapHeightVirtual * mapTransform.scale;
+
     const minX = rect.width - mapW;
     const maxX = 0;
     const minY = rect.height - mapH;
