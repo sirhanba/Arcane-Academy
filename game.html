@@ -996,15 +996,41 @@
   ];
   const DROP_CHANCE = 0.3;
 
+  // BASE DE DADOS COMPLETA DE EQUIPAMENTOS (LV 1, LV 5, LV 10)
   const EQUIP_ITEMS = [
-    { id: "chapeu_aprendiz", name: "Chapéu de Aprendiz", icon: "🎩", slot: "chapeu", stats: { defense: 1 } },
-    { id: "tunica_simples", name: "Túnica Simples", icon: "👕", slot: "roupa", stats: { defense: 2 } },
-    { id: "botas_surradas", name: "Botas Surradas", icon: "👢", slot: "sapatos", stats: { dodge: 2 } },
-    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "🧣", slot: "capa", stats: { penetration: 3 } },
-    { id: "colar_simples", name: "Colar Simples", icon: "📿", slot: "colar", stats: { luck: 3 } },
-    { id: "anel_cobre", name: "Anel de Cobre", icon: "💍", slot: "anel", stats: { crit: 3 } },
-    { id: "adaga_treino", name: "Adaga de Treino", icon: "🗡️", slot: "arma_secundaria", stats: { attack: 1 } },
-    { id: "cajado_iniciante", name: "Cajado de Iniciante", icon: "⚔️", slot: "arma_principal", stats: { attack: 2 } }
+    // CHAPÉUS
+    { id: "chapeu_aprendiz", name: "Chapéu de Aprendiz", icon: "🎩", slot: "chapeu", reqLevel: 1, stats: { defense: 1 } },
+    { id: "chapeu_mago", name: "Gorro do Conjurador", icon: "🧙‍♂️", slot: "chapeu", reqLevel: 5, stats: { defense: 3, mana: 5 } },
+    { id: "diadema_arcana", name: "Diadema Astral", icon: "👑", slot: "chapeu", reqLevel: 10, stats: { defense: 6, mana: 15, crit: 5 } },
+
+    // ROUPAS
+    { id: "tunica_simples", name: "Túnica Simples", icon: "👕", slot: "roupa", reqLevel: 1, stats: { defense: 2 } },
+    { id: "veste_reforcada", name: "Veste Arcana", icon: "🥋", slot: "roupa", reqLevel: 5, stats: { defense: 5, hp: 10 } },
+    { id: "manto_tecelao", name: "Manto das Sombras", icon: "🥻", slot: "roupa", reqLevel: 10, stats: { defense: 10, hp: 25, dodge: 5 } },
+
+    // SAPATOS
+    { id: "botas_surradas", name: "Botas Surradas", icon: "👢", slot: "sapatos", reqLevel: 1, stats: { dodge: 2 } },
+    { id: "botas_couro", name: "Passos de Vento", icon: "👟", slot: "sapatos", reqLevel: 5, stats: { dodge: 5, defense: 2 } },
+    { id: "botas_runicas", name: "Botas Rúnicas", icon: "🥾", slot: "sapatos", reqLevel: 10, stats: { dodge: 10, defense: 5, hpRegen: 1 } },
+
+    // CAPAS
+    { id: "capa_iniciante", name: "Capa de Iniciante", icon: "🧣", slot: "capa", reqLevel: 1, stats: { penetration: 3 } },
+    { id: "capa_misterio", name: "Manto Estelar", icon: "🧥", slot: "capa", reqLevel: 5, stats: { penetration: 7, attack: 2 } },
+    { id: "capa_fenix", name: "Capa do Sábio", icon: "🦹", slot: "capa", reqLevel: 10, stats: { penetration: 12, attack: 5, manaRegen: 1 } },
+
+    // COLARS
+    { id: "colar_simples", name: "Colar Simples", icon: "📿", slot: "colar", reqLevel: 1, stats: { luck: 3 } },
+    { id: "colar_cristal", name: "Amuleto de Cristal", icon: "💎", slot: "colar", reqLevel: 5, stats: { luck: 7, mana: 10 } },
+    { id: "colar_oculto", name: "Medalhão Celestial", icon: "🥇", slot: "colar", reqLevel: 10, stats: { luck: 15, mana: 20, hp: 15 } },
+
+    // ANÉIS
+    { id: "anel_cobre", name: "Anel de Cobre", icon: "💍", slot: "anel", reqLevel: 1, stats: { crit: 3 } },
+    { id: "anel_prata", name: "Anel de Prata", icon: "🪙", slot: "anel", reqLevel: 5, stats: { crit: 7, attack: 2 } },
+    { id: "anel_ouro_arcano", name: "Anel do Eclipse", icon: "🔮", slot: "anel", reqLevel: 10, stats: { crit: 12, attack: 5, penetration: 5 } },
+
+    // ARMAS (Iniciais Nv. 1 mantidas para o protótipo)
+    { id: "adaga_treino", name: "Adaga de Treino", icon: "🗡️", slot: "arma_secundaria", reqLevel: 1, stats: { attack: 1 } },
+    { id: "cajado_iniciante", name: "Cajado de Iniciante", icon: "⚔️", slot: "arma_principal", reqLevel: 1, stats: { attack: 2 } }
   ];
 
   function equipmentBonus(statKey) {
@@ -1055,6 +1081,16 @@
 
   function findItemDef(id) {
     return ITEMS.find(i => i.id === id) || EQUIP_ITEMS.find(i => i.id === id) || POTIONS.find(i => i.id === id) || null;
+  }
+
+  function getStatsSummaryText(stats) {
+    if (!stats) return "";
+    const labels = {
+      attack: "Ataque", defense: "Defesa", hp: "HP", mana: "Mana",
+      crit: "% Crítico", dodge: "% Esquiva", penetration: "% Penetração",
+      luck: "% Sorte", hpRegen: "Regen HP", manaRegen: "Regen Mana"
+    };
+    return Object.keys(stats).map(k => "+" + stats[k] + " " + (labels[k] || k)).join(", ");
   }
 
   const EQUIPMENT_SLOTS = [
@@ -1261,7 +1297,7 @@
       row.className = "slot-item-row";
       row.innerHTML =
         '<span class="upgrade-icon">' + equippedDef.icon + '</span>' +
-        '<div class="upgrade-info"><div class="uname">' + equippedDef.name + ' (equipado)</div></div>' +
+        '<div class="upgrade-info"><div class="uname">' + equippedDef.name + ' (equipado)</div><div class="udesc">' + getStatsSummaryText(equippedDef.stats) + '</div></div>' +
         '<button class="upgrade-buy" onclick="unequipItem(\'' + slotId + '\')">Remover</button>';
       list.appendChild(row);
     }
@@ -1271,12 +1307,18 @@
       list.innerHTML = '<div class="hint">Nenhum item disponível para este slot ainda.</div>';
     } else {
       options.forEach(i => {
+        const canEquip = state.level >= (i.reqLevel || 1);
         const row = document.createElement("div");
         row.className = "slot-item-row";
         row.innerHTML =
           '<span class="upgrade-icon">' + i.icon + '</span>' +
-          '<div class="upgrade-info"><div class="uname">' + i.name + '</div><div class="udesc">x' + state.inventory[i.id] + ' na mochila</div></div>' +
-          '<button class="upgrade-buy" onclick="equipItem(\'' + slotId + '\', \'' + i.id + '\')">Equipar</button>';
+          '<div class="upgrade-info">' +
+            '<div class="uname">' + i.name + ' <span style="font-size:0.7rem; color:var(--gold);">(Nv. ' + i.reqLevel + ')</span></div>' +
+            '<div class="udesc">' + getStatsSummaryText(i.stats) + '</div>' +
+          '</div>' +
+          '<button class="upgrade-buy" ' + (canEquip ? '' : 'disabled') + ' onclick="equipItem(\'' + slotId + '\', \'' + i.id + '\')">' +
+            (canEquip ? 'Equipar' : '🔒 Nv. ' + i.reqLevel) +
+          '</button>';
         list.appendChild(row);
       });
     }
@@ -1289,6 +1331,12 @@
   }
 
   function equipItem(slotId, itemId) {
+    const itemDef = findItemDef(itemId);
+    if (itemDef && state.level < (itemDef.reqLevel || 1)) {
+      showToast("❌ Nível insuficiente para equipar!");
+      return;
+    }
+
     const currentlyEquipped = state.equipment[slotId];
     if (currentlyEquipped) {
       state.inventory[currentlyEquipped] = (state.inventory[currentlyEquipped] || 0) + 1;
@@ -1943,69 +1991,39 @@
     if (descEl) descEl.textContent = "✅ HP e Mana totalmente recuperados!";
   }
 
-  // ---------- SISTEMA DE CRAFTING (CRIAÇÃO) ----------
+  // ---------- SISTEMA DE CRAFTING (RECEITAS DE POÇÕES E EQUIPAMENTOS) ----------
   let currentCraftCategory = "potions";
 
   const CRAFT_RECIPES = [
     // POÇÕES
-    {
-      id: "pocao_vida_p",
-      category: "potions",
-      name: "Poção de Vida Pequena",
-      icon: "🧪",
-      desc: "Restaura 40 HP",
-      reqs: { erva_lunar: 2 }
-    },
-    {
-      id: "pocao_mana_p",
-      category: "potions",
-      name: "Poção de Mana Pequena",
-      icon: "🧪",
-      desc: "Restaura 10 Mana",
-      reqs: { po_estelar: 2 }
-    },
-    {
-      id: "pocao_vida_g",
-      category: "potions",
-      name: "Poção de Vida Grande",
-      icon: "🧪",
-      desc: "Restaura 80 HP",
-      reqs: { erva_lunar: 4, cristal_arcano: 1 }
-    },
-    {
-      id: "pocao_mana_g",
-      category: "potions",
-      name: "Poção de Mana Grande",
-      icon: "🧪",
-      desc: "Restaura 20 Mana",
-      reqs: { po_estelar: 4, cristal_arcano: 1 }
-    },
+    { id: "pocao_vida_p", category: "potions", name: "Poção de Vida Pequena", icon: "🧪", desc: "Restaura 40 HP", reqs: { erva_lunar: 2 } },
+    { id: "pocao_mana_p", category: "potions", name: "Poção de Mana Pequena", icon: "🧪", desc: "Restaura 10 Mana", reqs: { po_estelar: 2 } },
+    { id: "pocao_vida_g", category: "potions", name: "Poção de Vida Grande", icon: "🧪", desc: "Restaura 80 HP", reqs: { erva_lunar: 4, cristal_arcano: 1 } },
+    { id: "pocao_mana_g", category: "potions", name: "Poção de Mana Grande", icon: "🧪", desc: "Restaura 20 Mana", reqs: { po_estelar: 4, cristal_arcano: 1 } },
 
-    // EQUIPAMENTOS
-    {
-      id: "capa_iniciante",
-      category: "equip",
-      name: "Capa de Iniciante",
-      icon: "🧣",
-      desc: "+3 Penetração de Armadura",
-      reqs: { po_estelar: 3, erva_lunar: 2 }
-    },
-    {
-      id: "colar_simples",
-      category: "equip",
-      name: "Colar Simples",
-      icon: "📿",
-      desc: "+3% Sorte",
-      reqs: { cristal_arcano: 2 }
-    },
-    {
-      id: "anel_cobre",
-      category: "equip",
-      name: "Anel de Cobre",
-      icon: "💍",
-      desc: "+3% Crítico",
-      reqs: { cristal_arcano: 1, po_estelar: 3 }
-    }
+    // EQUIPAMENTOS NV. 1
+    { id: "chapeu_aprendiz", category: "equip", name: "Chapéu de Aprendiz", icon: "🎩", desc: "Nv. 1 · Defesa +1", reqs: { erva_lunar: 2 } },
+    { id: "tunica_simples", category: "equip", name: "Túnica Simples", icon: "👕", desc: "Nv. 1 · Defesa +2", reqs: { erva_lunar: 3 } },
+    { id: "botas_surradas", category: "equip", name: "Botas Surradas", icon: "👢", desc: "Nv. 1 · Esquiva +2%", reqs: { erva_lunar: 2 } },
+    { id: "capa_iniciante", category: "equip", name: "Capa de Iniciante", icon: "🧣", desc: "Nv. 1 · Penetração +3%", reqs: { po_estelar: 2 } },
+    { id: "colar_simples", category: "equip", name: "Colar Simples", icon: "📿", desc: "Nv. 1 · Sorte +3%", reqs: { po_estelar: 2 } },
+    { id: "anel_cobre", category: "equip", name: "Anel de Cobre", icon: "💍", desc: "Nv. 1 · Crítico +3%", reqs: { po_estelar: 2 } },
+
+    // EQUIPAMENTOS NV. 5
+    { id: "chapeu_mago", category: "equip", name: "Gorro do Conjurador", icon: "🧙‍♂️", desc: "Nv. 5 · Defesa +3, Mana +5", reqs: { po_estelar: 4, cristal_arcano: 1 } },
+    { id: "veste_reforcada", category: "equip", name: "Veste Arcana", icon: "🥋", desc: "Nv. 5 · Defesa +5, HP +10", reqs: { erva_lunar: 5, cristal_arcano: 1 } },
+    { id: "botas_couro", category: "equip", name: "Passos de Vento", icon: "👟", desc: "Nv. 5 · Esquiva +5%, Defesa +2", reqs: { erva_lunar: 4, po_estelar: 3 } },
+    { id: "capa_misterio", category: "equip", name: "Manto Estelar", icon: "🧥", desc: "Nv. 5 · Penetração +7%, Ataque +2", reqs: { po_estelar: 5, cristal_arcano: 1 } },
+    { id: "colar_cristal", category: "equip", name: "Amuleto de Cristal", icon: "💎", desc: "Nv. 5 · Sorte +7%, Mana +10", reqs: { cristal_arcano: 2, erva_lunar: 3 } },
+    { id: "anel_prata", category: "equip", name: "Anel de Prata", icon: "🪙", desc: "Nv. 5 · Crítico +7%, Ataque +2", reqs: { cristal_arcano: 2, po_estelar: 3 } },
+
+    // EQUIPAMENTOS NV. 10
+    { id: "diadema_arcana", category: "equip", name: "Diadema Astral", icon: "👑", desc: "Nv. 10 · Defesa +6, Mana +15, Crítico +5%", reqs: { cristal_arcano: 3, pena_fenix: 1 } },
+    { id: "manto_tecelao", category: "equip", name: "Manto das Sombras", icon: "🥻", desc: "Nv. 10 · Defesa +10, HP +25, Esquiva +5%", reqs: { cristal_arcano: 4, pena_fenix: 1 } },
+    { id: "botas_runicas", category: "equip", name: "Botas Rúnicas", icon: "🥾", desc: "Nv. 10 · Esquiva +10%, Defesa +5, Regen HP +1", reqs: { cristal_arcano: 3, pena_fenix: 1 } },
+    { id: "capa_fenix", category: "equip", name: "Capa do Sábio", icon: "🦹", desc: "Nv. 10 · Penetração +12%, Ataque +5, Regen Mana +1", reqs: { po_estelar: 6, pena_fenix: 1 } },
+    { id: "colar_oculto", category: "equip", name: "Medalhão Celestial", icon: "🥇", desc: "Nv. 10 · Sorte +15%, Mana +20, HP +15", reqs: { cristal_arcano: 3, pena_fenix: 2 } },
+    { id: "anel_ouro_arcano", category: "equip", name: "Anel do Eclipse", icon: "🔮", desc: "Nv. 10 · Crítico +12%, Ataque +5, Penetração +5%", reqs: { cristal_arcano: 3, pena_fenix: 2 } }
   ];
 
   function setCraftCategory(cat) {
@@ -2060,7 +2078,6 @@
     const recipe = CRAFT_RECIPES.find(r => r.id === recipeId);
     if (!recipe) return;
 
-    // Verificar se possui os ingredientes
     for (const matId of Object.keys(recipe.reqs)) {
       const needed = recipe.reqs[matId];
       if ((state.inventory[matId] || 0) < needed) {
@@ -2069,14 +2086,12 @@
       }
     }
 
-    // Consumir os ingredientes
     for (const matId of Object.keys(recipe.reqs)) {
       const needed = recipe.reqs[matId];
       state.inventory[matId] -= needed;
       if (state.inventory[matId] <= 0) delete state.inventory[matId];
     }
 
-    // Adicionar o item criado
     state.inventory[recipe.id] = (state.inventory[recipe.id] || 0) + 1;
 
     saveState();
