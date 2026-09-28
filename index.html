@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arcane Academy</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #150b2e;
+    color: #f2ecff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+  }
+</style>
+</head>
+<body>
+<div>Carregando Arcane Academy...</div>
+<script>
+  // Este arquivo quase nunca muda — ele só existe pra garantir que o
+  // jogo de verdade (game.html) SEMPRE seja buscado sem cache,
+  // mesmo dentro do webview do Telegram.
+  window.location.replace("game.html?cb=" + Date.now());
+</script>
+</body>
+</html>
