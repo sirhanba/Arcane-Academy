@@ -155,9 +155,10 @@
     font-size: 0.75rem;
     white-space: nowrap;
     min-width: 68px;
+    cursor: pointer;
   }
   .upgrade-buy.essence-cost { background: linear-gradient(135deg, #c9962f, #e8c15a); color: #2a1a00; }
-  .upgrade-buy:disabled { opacity: 0.35; }
+  .upgrade-buy:disabled { opacity: 0.35; cursor: not-allowed; }
   
   .creation-screen {
     display: flex;
@@ -184,6 +185,7 @@
     border-radius: 8px;
     padding: 10px 14px;
     font-size: 0.85rem;
+    cursor: pointer;
   }
   .nick-status { font-size: 0.8rem; min-height: 18px; }
   .nick-status.ok { color: var(--green); }
@@ -206,6 +208,7 @@
     border: 2px solid var(--purple);
     background: rgba(255,255,255,0.03);
     color: var(--text);
+    cursor: pointer;
   }
   .gender-btn.active {
     background: var(--purple);
@@ -225,6 +228,7 @@
     height: 42px;
     border-radius: 50%;
     font-size: 1.2rem;
+    cursor: pointer;
   }
   .preset-label {
     font-size: 0.85rem;
@@ -241,8 +245,9 @@
     border-radius: 14px;
     background: linear-gradient(135deg, var(--gold), #c9962f);
     color: #2a1a00;
+    cursor: pointer;
   }
-  .confirm-btn:disabled { opacity: 0.4; }
+  .confirm-btn:disabled { opacity: 0.4; cursor: not-allowed; }
   .hidden { display: none !important; }
   .house-grid {
     display: grid;
@@ -258,6 +263,7 @@
     border-radius: 12px;
     padding: 12px;
     text-align: left;
+    cursor: pointer;
   }
   .house-card.selected {
     border-color: var(--gold);
@@ -285,6 +291,7 @@
     border-radius: 12px;
     padding: 6px 2px;
     color: var(--text);
+    cursor: pointer;
   }
   .nav-btn:active { background: rgba(255,255,255,0.1); }
   .nav-btn .nav-icon { font-size: 1.2rem; line-height: 1; }
@@ -305,6 +312,7 @@
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     color: var(--text);
+    cursor: pointer;
   }
   .craft-tab-btn.active {
     background: var(--purple);
@@ -377,8 +385,9 @@
     padding: 12px 6px;
     color: var(--text);
     font-size: 0.8rem;
+    cursor: pointer;
   }
-  .zone-btn:disabled { opacity: 0.4; }
+  .zone-btn:disabled { opacity: 0.4; cursor: not-allowed; }
   .monster-card {
     display: flex;
     align-items: center;
@@ -403,8 +412,9 @@
     padding: 10px 14px;
     font-size: 0.8rem;
     white-space: nowrap;
+    cursor: pointer;
   }
-  .monster-fight-btn:disabled { opacity: 0.4; background: rgba(255,255,255,0.1); }
+  .monster-fight-btn:disabled { opacity: 0.4; background: rgba(255,255,255,0.1); cursor: not-allowed; }
   .reward-line {
     font-size: 0.95rem;
     padding: 6px 0;
@@ -439,6 +449,7 @@
     justify-content: center;
     font-size: 1.3rem;
     position: relative;
+    cursor: pointer;
   }
   .equip-slot.filled { border-color: var(--gold); background: rgba(232,193,90,0.1); }
   .equip-slot .slot-placeholder { opacity: 0.3; font-size: 1.1rem; }
@@ -551,6 +562,7 @@
     font-size: 0.85rem;
     padding: 6px 0;
     text-align: left;
+    cursor: pointer;
   }
   .combat-vs {
     display: flex;
@@ -574,11 +586,12 @@
     border: none;
     font-size: 0.85rem;
     font-weight: bold;
+    cursor: pointer;
   }
   .btn-attack { background: var(--purple); color: white; }
   .btn-spell { background: linear-gradient(135deg, #3a7bd5, #5aa8f0); color: white; }
   .btn-flee { background: rgba(255,255,255,0.1); color: var(--text); }
-  .combat-actions button:disabled { opacity: 0.35; }
+  .combat-actions button:disabled { opacity: 0.35; cursor: not-allowed; }
   .combat-potion-row {
     display: flex;
     align-items: center;
@@ -596,6 +609,7 @@
     border-radius: 6px;
     padding: 6px 10px;
     font-size: 0.75rem;
+    cursor: pointer;
   }
   .qty-row {
     display: flex;
@@ -611,6 +625,7 @@
     background: var(--purple);
     color: white;
     font-size: 1.2rem;
+    cursor: pointer;
   }
   .qty-row input {
     flex: 1;
@@ -629,6 +644,7 @@
     border-radius: 8px;
     padding: 8px 10px;
     font-size: 0.75rem;
+    cursor: pointer;
   }
   #toastContainer {
     position: fixed;
@@ -740,15 +756,4 @@
       <div class="bar-container">
         <!-- 1. BARRA DE HP -->
         <div>
-          <div class="stat-line"><span>❤️ HP</span><span id="hdrHpText">30 / 30</span></div>
-          <div class="bar-outer"><div class="bar-inner bar-hp" id="hdrHpBar" style="width:100%"></div></div>
-        </div>
-
-        <!-- 2. BARRA DE MANA -->
-        <div>
-          <div class="stat-line"><span>🔵 Mana</span><span id="hdrManaText">10 / 10</span></div>
-          <div class="bar-outer"><div class="bar-inner bar-mana" id="hdrManaBar" style="width:100%"></div></div>
-        </div>
-
-        <!-- 3. BARRA DE XP -->
-          
+          <div class="stat-line"><span>❤️ HP</span><span id="hdrHpText">30 / 30</sp
