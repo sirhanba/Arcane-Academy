@@ -4,7 +4,40 @@
 
 const RANKING_MEDALS = ["🥇", "🥈", "🥉"];
 
+// ---------- Ponto vermelho do botão Social ----------
+// Aparece quando chega um pedido de amizade novo; some quando o jogador abre a aba Social.
+let socialIncoming = 0;
+let socialSeen = 0;
+try { socialSeen = parseInt(localStorage.getItem("arcanum_social_seen"), 10) || 0; } catch (e) { /* sem storage: tudo bem */ }
+
+function refreshSocialDot() {
+  const dot = document.getElementById("socialDot");
+  if (dot) dot.classList.toggle("hidden", !(socialIncoming > socialSeen));
+}
+
+function markSocialSeen() {
+  socialSeen = socialIncoming;
+  try { localStorage.setItem("arcanum_social_seen", String(socialSeen)); } catch (e) { /* ignora */ }
+  refreshSocialDot();
+}
+
+// Chamado pelo sinal de vida (cloud.js) com o número de pedidos esperando resposta.
+function updateSocialDot(n) {
+  const grew = n > socialIncoming;
+  socialIncoming = n;
+  if (socialSeen > socialIncoming) { socialSeen = socialIncoming; markSocialSeen(); }
+  const screen = document.getElementById("socialScreen");
+  if (screen && !screen.classList.contains("hidden")) {
+    // O jogador já está na aba: atualiza a lista em vez de acender o ponto.
+    if (grew) renderFriends();
+    markSocialSeen();
+    return;
+  }
+  refreshSocialDot();
+}
+
 function openSocial() {
+  markSocialSeen();
   renderFriends();
   renderRanking();
 }
@@ -107,6 +140,8 @@ async function renderFriends() {
     const r = await cloudCall("friends_list");
     if (!r.ok) throw new Error("friends_list");
     friendsData = r;
+    socialIncoming = r.incoming.length;
+    markSocialSeen();
   } catch (e) {
     list.innerHTML = '<div class="hint">Não foi possível carregar os amigos. Tente abrir a aba de novo.</div>';
     return;
