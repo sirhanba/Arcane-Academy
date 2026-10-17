@@ -12,6 +12,11 @@ const LOCATIONS = [
   { id: "lago", name: "Lago Sereno", icon: "🌊", x: 460, y: 640, desc: "Águas calmas onde dizem viver espíritos antigos.", connections: ["jardins", "floresta", "vila"], implemented: false },
   { id: "vila", name: "Vila dos Mercadores", icon: "🏘️", x: 260, y: 660, desc: "Um pequeno povoado movimentado por comerciantes viajantes.", connections: ["academia", "floresta", "lago"], implemented: true, merchantOnly: true, hasMerchant: true },
   { id: "ruinas", name: "Ruínas Antigas", icon: "🏚️", x: 900, y: 640, desc: "Restos de uma civilização mágica esquecida pelo tempo.", connections: ["floresta", "cavernas"], implemented: false }
+  { id: "biblioteca", name: "Biblioteca Arcaica", icon: "📚", x: 140, y: 220, desc: "Antigos tomos de magia proibida e pergaminhos poeirentos repousam nas prateleiras.", connections: ["academia", "jardins"], implemented: true },
+  { id: "cristais", name: "Vale dos Cristais", icon: "💎", x: 420, y: 450, desc: "Formações cristalinas que brilham com luz própria, ricas em energia elemental.", connections: ["academia", "jardins", "lago"], implemented: false },
+  { id: "pantano", name: "Pântano dos Murmúrios", icon: "🐸", x: 680, y: 800, desc: "Águas turvas e névoa espessa escondem criaturas anfíbias e ingredientes raros de poções.", connections: ["lago", "ruinas"], implemented: false },
+  { id: "picos", name: "Picos Celestiais", icon: "⛰️", x: 900, y: 40, desc: "O topo gélido da montanha onde os ventos uivam e correntes de pura essência circulam.", connections: ["cavernas"], implemented: false },
+  { id: "catacumbas", name: "Catacumbas Subterrâneas", icon: "⚰️", x: 1100, y: 470, desc: "Túmulos esquecidos de antigos magos, guardados por espectros e armadilhas arcanas.", connections: ["cavernas", "ruinas"], implemented: false }
 ];
 
 const TRAVEL_MS = 1 * 60 * 1000; // 1 minuto
