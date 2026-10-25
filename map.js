@@ -72,7 +72,7 @@ function renderMapNodes() {
       line.setAttribute("y1", loc.y);
       line.setAttribute("x2", other.x);
       line.setAttribute("y2", other.y);
-      line.setAttribute("stroke", "rgba(232,193,90,0.35)");
+      line.setAttribute("stroke", "rgba(201,162,75,0.35)");
       line.setAttribute("stroke-width", "3");
       line.setAttribute("stroke-dasharray", "6,6");
       edgesSvg.appendChild(line);

@@ -38,7 +38,7 @@
 
     <div class="card">
       <div class="avatar-box">
-        <svg id="avatarSvg" width="140" height="180" viewBox="0 0 140 180"></svg>
+        <svg id="avatarSvg" width="130" height="285" viewBox="0 0 292 640"></svg>
       </div>
 
       <div class="gender-row">
@@ -47,9 +47,14 @@
       </div>
 
       <div class="preset-row" style="margin-top:16px;">
-        <button class="arrow-btn" onclick="cyclePreset(-1)">‹</button>
-        <div class="preset-label" id="presetLabel">Visual 1</div>
-        <button class="arrow-btn" onclick="cyclePreset(1)">›</button>
+        <button class="arrow-btn" onclick="cycleHair(-1)">‹</button>
+        <div class="preset-label" id="hairLabel">Cabelo 1/5</div>
+        <button class="arrow-btn" onclick="cycleHair(1)">›</button>
+      </div>
+      <div class="preset-row" style="margin-top:10px;">
+        <button class="arrow-btn" onclick="cycleFace(-1)">‹</button>
+        <div class="preset-label" id="faceLabel">Rosto 1/5</div>
+        <button class="arrow-btn" onclick="cycleFace(1)">›</button>
       </div>
     </div>
 
@@ -91,8 +96,8 @@
 
       <div class="header-currencies">
         <span>🪙 <b id="goldVal">0</b></span>
-        <span>💎 <b id="essenceVal">0</b> <button onclick="openPix()" title="Comprar Essência" style="margin-left:4px;width:22px;height:22px;border-radius:50%;border:1px solid #e8c15a;background:rgba(232,193,90,0.15);color:#e8c15a;font-weight:bold;line-height:1;padding:0;">+</button> <button onclick="openVip()" title="VIP" style="margin-left:4px;height:22px;border-radius:11px;border:1px solid #e8c15a;background:rgba(232,193,90,0.15);color:#e8c15a;font-weight:bold;font-size:0.7rem;line-height:1;padding:0 8px;">VIP</button></span>
-        <button onclick="openDaily()" title="Prêmio diário" style="position:relative;height:22px;border-radius:11px;border:1px solid #e8c15a;background:rgba(232,193,90,0.15);color:#e8c15a;font-weight:bold;font-size:0.7rem;line-height:1;padding:0 8px;">🎁 Prêmio diário<span id="dailyDot" class="hidden" style="position:absolute;top:-4px;right:-3px;width:10px;height:10px;border-radius:50%;background:#e5393a;border:2px solid #1a1030;"></span></button>
+        <span>💎 <b id="essenceVal">0</b> <button onclick="openPix()" title="Comprar Essência" style="margin-left:4px;width:22px;height:22px;border-radius:50%;border:1px solid #c9a24b;background:rgba(201,162,75,0.15);color:#c9a24b;font-weight:bold;line-height:1;padding:0;">+</button> <button onclick="openVip()" title="VIP" style="margin-left:4px;height:22px;border-radius:11px;border:1px solid #c9a24b;background:rgba(201,162,75,0.15);color:#c9a24b;font-weight:bold;font-size:0.7rem;line-height:1;padding:0 8px;">VIP</button></span>
+        <button onclick="openDaily()" title="Prêmio diário" style="position:relative;height:22px;border-radius:11px;border:1px solid #c9a24b;background:rgba(201,162,75,0.15);color:#c9a24b;font-weight:bold;font-size:0.7rem;line-height:1;padding:0 8px;">🎁 Prêmio diário<span id="dailyDot" class="hidden" style="position:absolute;top:-4px;right:-3px;width:10px;height:10px;border-radius:50%;background:#e5393a;border:2px solid #0b0814;"></span></button>
       </div>
     </div>
 
@@ -102,12 +107,12 @@
         <span class="nav-label">Mapa</span>
       </button>
       <button class="nav-btn" style="position:relative;" onclick="navClick('mochila')">
-        <span id="achDot" class="hidden" style="position:absolute;top:6px;right:16px;width:11px;height:11px;border-radius:50%;background:#e5393a;border:2px solid #1a1030;"></span>
+        <span id="achDot" class="hidden" style="position:absolute;top:6px;right:16px;width:11px;height:11px;border-radius:50%;background:#e5393a;border:2px solid #0b0814;"></span>
         <span class="nav-icon">🧙‍♀️</span>
         <span class="nav-label">Personagem</span>
       </button>
       <button class="nav-btn" style="position:relative;" onclick="navClick('habilidades')">
-        <span id="skillDot" class="hidden" style="position:absolute;top:6px;right:16px;width:11px;height:11px;border-radius:50%;background:#e5393a;border:2px solid #1a1030;"></span>
+        <span id="skillDot" class="hidden" style="position:absolute;top:6px;right:16px;width:11px;height:11px;border-radius:50%;background:#e5393a;border:2px solid #0b0814;"></span>
         <span class="nav-icon">⚔️</span>
         <span class="nav-label">Habilidades</span>
       </button>
@@ -116,7 +121,7 @@
         <span class="nav-label">Criação</span>
       </button>
       <button class="nav-btn" style="position:relative;" onclick="navClick('social')">
-        <span id="socialDot" class="hidden" style="position:absolute;top:6px;right:16px;width:11px;height:11px;border-radius:50%;background:#e5393a;border:2px solid #1a1030;"></span>
+        <span id="socialDot" class="hidden" style="position:absolute;top:6px;right:16px;width:11px;height:11px;border-radius:50%;background:#e5393a;border:2px solid #0b0814;"></span>
         <span class="nav-icon">👥</span>
         <span class="nav-label">Social</span>
       </button>
@@ -190,7 +195,7 @@
     <div class="card">
       <div class="inv-title">💬 Chat Geral</div>
       <div id="chatBox" style="max-height:260px;overflow-y:auto;font-size:0.82rem;line-height:1.35;padding:4px 2px;"></div>
-      <div id="chatUserPanel" class="hidden" style="margin:8px 0;padding:10px;border:1px solid rgba(232,193,90,0.3);border-radius:10px;"></div>
+      <div id="chatUserPanel" class="hidden" style="margin:8px 0;padding:10px;border:1px solid rgba(201,162,75,0.3);border-radius:10px;"></div>
       <div class="nick-row" style="margin-top:8px;">
         <input id="chatInput" type="text" placeholder="Digite uma mensagem…" maxlength="200" onkeydown="if(event.key==='Enter')sendChat()">
         <button onclick="sendChat()">Enviar</button>
@@ -288,7 +293,7 @@
       <div class="equip-row">
         <div class="equip-col" id="equipColLeft"></div>
         <div class="equip-avatar">
-          <svg id="mochilaAvatarSvg" width="120" height="150" viewBox="0 0 140 180"></svg>
+          <svg id="mochilaAvatarSvg" width="100" height="219" viewBox="0 0 292 640"></svg>
         </div>
         <div class="equip-col" id="equipColRight"></div>
       </div>

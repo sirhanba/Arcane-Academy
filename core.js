@@ -9,7 +9,7 @@ if (tg) {
   tg.ready();
   tg.expand();
   // Cor de fundo/cabeçalho do Telegram = a do jogo (antes usava a cor do tema do Telegram e criava uma faixa)
-  try { tg.setBackgroundColor("#150b2e"); tg.setHeaderColor("#150b2e"); } catch (e) { /* versões antigas do Telegram */ }
+  try { tg.setBackgroundColor("#0b0814"); tg.setHeaderColor("#0b0814"); } catch (e) { /* versões antigas do Telegram */ }
 }
 
 // --- Estado do jogo (salvo no localStorage por enquanto) ---
@@ -22,6 +22,8 @@ function defaultState() {
     house: null,
     gender: "f",
     presetIndex: 0,
+    hair: 0,
+    face: 0,
     level: 1,
     xp: 0,
     xpToNext: 50,
@@ -128,6 +130,8 @@ function loadState() {
     if (loaded.nextGearUid === undefined) loaded.nextGearUid = 1;
     if (!loaded.skills) loaded.skills = {};
     if (loaded.presetIndex === undefined) loaded.presetIndex = 0;
+    if (loaded.hair === undefined) loaded.hair = (loaded.presetIndex || 0) % 5;
+    if (loaded.face === undefined) loaded.face = (loaded.presetIndex || 0) % 5;
     if (loaded.bagSlots === undefined) loaded.bagSlots = 20;
     if (!loaded.mutedNames) loaded.mutedNames = [];
     if (!loaded.vipUntil) loaded.vipUntil = 0;

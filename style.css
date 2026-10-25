@@ -1,11 +1,11 @@
 /* Arcanum — estilos do jogo (style.css) */
 :root {
-  --bg: #150b2e;
-  --bg2: #1f1245;
-  --gold: #e8c15a;
-  --purple: #7d4fd6;
-  --purple-light: #a687f0;
-  --text: #f2ecff;
+  --bg: #0b0814;
+  --bg2: #14101f;
+  --gold: #c9a24b;
+  --purple: #4a3478;
+  --purple-light: #8a72b8;
+  --text: #e4dcf0;
   --green: #4caf7d;
 }
 * { box-sizing: border-box; }
@@ -44,8 +44,9 @@ h1 {
   margin-top: -8px;
 }
 .card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(232,193,90,0.25);
+  background: linear-gradient(180deg, rgba(26,20,40,0.92), rgba(16,12,26,0.92));
+  border: 1px solid rgba(201,162,75,0.35);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.5);
   border-radius: 14px;
   padding: 16px;
 }
@@ -89,7 +90,7 @@ h1 {
   background: linear-gradient(90deg, var(--purple), var(--purple-light));
   transition: width 0.3s ease;
 }
-.bar-inner.mana { background: linear-gradient(90deg, #3a7bd5, #5aa8f0); }
+.bar-inner.mana { background: linear-gradient(90deg, #243f78, #3f6fb3); }
 .currencies {
   display: flex;
   justify-content: space-between;
@@ -118,7 +119,7 @@ h1 {
   font-weight: bold;
   border: none;
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--purple), #4b2a99);
+  background: linear-gradient(135deg, var(--purple), #2c1d52);
   color: white;
   box-shadow: 0 4px 14px rgba(125,79,214,0.5);
   active-opacity: 0.8;
@@ -173,7 +174,7 @@ h1 {
 .rarity-comum { border-color: rgba(255,255,255,0.15); }
 .rarity-incomum { border-color: rgba(110,200,120,0.5); }
 .rarity-raro { border-color: rgba(90,168,240,0.5); }
-.rarity-epico { border-color: rgba(232,193,90,0.6); }
+.rarity-epico { border-color: rgba(201,162,75,0.6); }
 .upgrade-row {
   display: flex;
   align-items: center;
@@ -197,7 +198,7 @@ h1 {
   white-space: nowrap;
   min-width: 68px;
 }
-.upgrade-buy.essence-cost { background: linear-gradient(135deg, #c9962f, #e8c15a); color: #2a1a00; }
+.upgrade-buy.essence-cost { background: linear-gradient(135deg, #9c7a2e, #c9a24b); color: #2a1a00; }
 .upgrade-buy:disabled { opacity: 0.35; }
 .creation-screen {
   display: flex;
@@ -279,7 +280,7 @@ h1 {
   font-weight: bold;
   border: none;
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--gold), #c9962f);
+  background: linear-gradient(135deg, var(--gold), #9c7a2e);
   color: #2a1a00;
 }
 .confirm-btn:disabled { opacity: 0.4; }
@@ -301,7 +302,7 @@ h1 {
 }
 .house-card.selected {
   border-color: var(--gold);
-  background: rgba(232,193,90,0.08);
+  background: rgba(201,162,75,0.08);
 }
 .house-icon { font-size: 1.8rem; line-height: 1; }
 .house-info .hname { font-weight: bold; font-size: 1rem; }
@@ -317,8 +318,8 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(20,16,31,0.9);
+  border: 1px solid rgba(201,162,75,0.22);
   border-radius: 12px;
   padding: 10px 2px;
   color: var(--text);
@@ -326,10 +327,11 @@ h1 {
 .nav-btn:active { background: rgba(255,255,255,0.1); }
 .nav-btn .nav-icon { font-size: 1.5rem; line-height: 1; }
 .nav-btn .nav-label { font-size: 0.62rem; white-space: nowrap; color: rgba(255,255,255,0.7); }
-.hp-bar .bar-inner { background: linear-gradient(90deg, #b03a3a, #e05a5a); }
+.hp-bar .bar-inner { background: linear-gradient(90deg, #6e1f24, #a8343a); }
 .zone-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(232,193,90,0.2);
+  background: linear-gradient(180deg, rgba(26,20,40,0.92), rgba(16,12,26,0.92));
+  border: 1px solid rgba(201,162,75,0.3);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6);
   border-radius: 14px;
   padding: 14px;
 }
@@ -407,14 +409,14 @@ h1 {
   height: 48px;
   border-radius: 10px;
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(232,193,90,0.3);
+  border: 1px solid rgba(201,162,75,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
   position: relative;
 }
-.equip-slot.filled { border-color: var(--gold); background: rgba(232,193,90,0.1); }
+.equip-slot.filled { border-color: var(--gold); background: rgba(201,162,75,0.1); }
 .equip-slot .slot-placeholder { opacity: 0.3; font-size: 1.1rem; }
 .inv-grid5x4 {
   display: grid;
@@ -441,8 +443,8 @@ h1 {
   font-weight: bold;
 }
 .inv-cell.gear {
-  border-color: rgba(232,193,90,0.45);
-  background: rgba(232,193,90,0.07);
+  border-color: rgba(201,162,75,0.45);
+  background: rgba(201,162,75,0.07);
 }
 .inv-cell .gtier {
   position: absolute;
@@ -475,7 +477,7 @@ h1 {
   align-items: center;
 }
 .attr-item { cursor: pointer; border: 1px solid transparent; }
-.attr-item.selected { border-color: var(--gold); background: rgba(232,193,90,0.1); }
+.attr-item.selected { border-color: var(--gold); background: rgba(201,162,75,0.1); }
 .attr-desc {
   margin-top: 8px;
   padding: 8px 10px;
@@ -493,8 +495,8 @@ h1 {
   height: 380px;
   overflow: hidden;
   border-radius: 14px;
-  background: radial-gradient(circle at 30% 20%, #1f1245, #0d0620);
-  border: 1px solid rgba(232,193,90,0.2);
+  background: radial-gradient(circle at 30% 20%, #14101f, #05030a);
+  border: 1px solid rgba(201,162,75,0.2);
   touch-action: none;
   user-select: none;
 }
@@ -517,15 +519,15 @@ h1 {
   justify-content: center;
   font-size: 1.6rem;
   background: rgba(255,255,255,0.06);
-  border: 2px solid rgba(232,193,90,0.5);
+  border: 2px solid rgba(201,162,75,0.5);
   transform: translate(-50%, -50%);
   cursor: pointer;
 }
 .map-node.current { border-color: #4caf7d; box-shadow: 0 0 14px #4caf7d; }
-.map-node.traveling-to { border-color: #e8c15a; animation: pulseNode 1.2s infinite; }
+.map-node.traveling-to { border-color: #c9a24b; animation: pulseNode 1.2s infinite; }
 @keyframes pulseNode {
-  0%, 100% { box-shadow: 0 0 6px rgba(232,193,90,0.4); }
-  50% { box-shadow: 0 0 16px rgba(232,193,90,0.9); }
+  0%, 100% { box-shadow: 0 0 6px rgba(201,162,75,0.4); }
+  50% { box-shadow: 0 0 16px rgba(201,162,75,0.9); }
 }
 .node-label {
   position: absolute;
@@ -683,7 +685,7 @@ h1 {
   gap: 4px;
 }
 .combat-log .log-entry { line-height: 1.3; }
-.combat-log .log-entry.entry-player { color: #a687f0; }
+.combat-log .log-entry.entry-player { color: #8a72b8; }
 .combat-log .log-entry.entry-enemy { color: #e5615a; }
 .combat-log .log-entry.entry-system { color: rgba(255,255,255,0.45); font-style: italic; }
 .monster-row {
@@ -714,8 +716,8 @@ h1 {
 .monster-fight-btn:disabled { opacity: 0.4; }
 
 .quest-reward {
-  background: rgba(232,193,90,0.08);
-  border: 1px solid rgba(232,193,90,0.35);
+  background: rgba(201,162,75,0.08);
+  border: 1px solid rgba(201,162,75,0.35);
   border-radius: 10px;
   padding: 10px 12px;
   margin: 10px 0 14px;
@@ -781,7 +783,7 @@ h1 {
   padding: 10px;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--gold), #c9962f);
+  background: linear-gradient(135deg, var(--gold), #9c7a2e);
   color: #2a1a00;
   font-weight: bold;
   font-size: 0.9rem;
@@ -797,7 +799,7 @@ h1 {
   backdrop-filter: blur(6px);
   margin: -20px -16px 0;
   padding: 14px 16px 10px;
-  border-bottom: 1px solid rgba(232,193,90,0.25);
+  border-bottom: 1px solid rgba(201,162,75,0.25);
 }
 .player-header .subtitle { margin: 0 0 8px; text-align: left; }
 .header-bar {
@@ -849,8 +851,8 @@ h1 {
   width: 100%;
   overflow: hidden;
   border-radius: 14px;
-  background: radial-gradient(circle at 50% 100%, #1f1245, #0d0620);
-  border: 1px solid rgba(232,193,90,0.2);
+  background: radial-gradient(circle at 50% 100%, #14101f, #05030a);
+  border: 1px solid rgba(201,162,75,0.2);
   --sk-small: 26px;
   --sk-big: 38px;
 }
@@ -877,8 +879,8 @@ h1 {
 }
 .skill-node.big { width: var(--sk-big); height: var(--sk-big); font-size: calc(var(--sk-big) * 0.6); border-radius: 12px; }
 .skill-node.reachable { opacity: 0.8; border-color: rgba(166,135,240,0.6); }
-.skill-node.available { opacity: 1; border-color: #a687f0; animation: pulseSkill 1.4s infinite; }
-.skill-node.unlocked { opacity: 1; background: rgba(232,193,90,0.18); border-color: var(--gold); box-shadow: 0 0 10px rgba(232,193,90,0.55); }
+.skill-node.available { opacity: 1; border-color: #8a72b8; animation: pulseSkill 1.4s infinite; }
+.skill-node.unlocked { opacity: 1; background: rgba(201,162,75,0.18); border-color: var(--gold); box-shadow: 0 0 10px rgba(201,162,75,0.55); }
 .skill-node.selected { outline: 3px solid #fff; }
 @keyframes pulseSkill {
   0%, 100% { box-shadow: 0 0 4px rgba(166,135,240,0.4); }
@@ -915,8 +917,8 @@ h1 {
   font-size: 0.7rem;
 }
 .combat-status .status-chip {
-  background: rgba(232,193,90,0.15);
-  border: 1px solid rgba(232,193,90,0.4);
+  background: rgba(201,162,75,0.15);
+  border: 1px solid rgba(201,162,75,0.4);
   border-radius: 10px;
   padding: 2px 8px;
 }
@@ -941,7 +943,7 @@ h1 {
   color: rgba(255,255,255,0.7);
   font-weight: bold;
 }
-.enc-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(232,193,90,0.12); }
+.enc-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(201,162,75,0.12); }
 .enc-item {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
@@ -971,8 +973,8 @@ h1 {
   font-size: 0.8rem;
 }
 .enc-tip {
-  background: rgba(232,193,90,0.12);
-  border: 1px solid rgba(232,193,90,0.35);
+  background: rgba(201,162,75,0.12);
+  border: 1px solid rgba(201,162,75,0.35);
   border-radius: 8px;
   padding: 8px 10px;
 }
@@ -985,7 +987,7 @@ h1 {
 .intro-view > * { animation: introFade 1.2s ease; }
 @keyframes introFade { from { opacity: 0; } to { opacity: 1; } }
 .intro-icon { width: min(82vw, 360px); height: auto; mix-blend-mode: lighten; } /* o fundo preto do ícone some no fundo da tela */
-.intro-name { font-size: 2.2rem; font-weight: bold; letter-spacing: 0.35em; padding-left: 0.35em; color: var(--gold); text-shadow: 0 0 18px rgba(232,193,90,0.35); }
+.intro-name { font-size: 2.2rem; font-weight: bold; letter-spacing: 0.35em; padding-left: 0.35em; color: var(--gold); text-shadow: 0 0 18px rgba(201,162,75,0.35); }
 .intro-enter { width: 80%; padding: 20px; font-size: 1.25rem; margin-top: 8px; }
 .intro-text { font-size: 1.08rem; line-height: 1.75; white-space: pre-line; text-align: center; color: rgba(255,255,255,0.92); padding: 0 6px; }
 .intro-hint { font-size: 0.72rem; color: rgba(255,255,255,0.4); }
@@ -993,15 +995,15 @@ h1 {
 
 /* ---------- MINI TUTORIAL ---------- */
 .tut-overlay { position: fixed; inset: 0; background: rgba(5,3,15,0.72); z-index: 1000; }
-.nav-btn.tut-hl { position: relative; z-index: 1001; border-color: var(--gold); background: rgba(232,193,90,0.2); box-shadow: 0 0 14px rgba(232,193,90,0.7); }
-.tut-bubble { position: fixed; z-index: 1002; background: #2a1a4a; border: 1px solid var(--gold); border-radius: 14px; padding: 14px; box-shadow: 0 8px 28px rgba(0,0,0,0.5); }
-.tut-arrow { position: absolute; top: -9px; width: 14px; height: 14px; background: #2a1a4a; border-left: 1px solid var(--gold); border-top: 1px solid var(--gold); transform: rotate(45deg); }
+.nav-btn.tut-hl { position: relative; z-index: 1001; border-color: var(--gold); background: rgba(201,162,75,0.2); box-shadow: 0 0 14px rgba(201,162,75,0.7); }
+.tut-bubble { position: fixed; z-index: 1002; background: #1c1530; border: 1px solid var(--gold); border-radius: 14px; padding: 14px; box-shadow: 0 8px 28px rgba(0,0,0,0.5); }
+.tut-arrow { position: absolute; top: -9px; width: 14px; height: 14px; background: #1c1530; border-left: 1px solid var(--gold); border-top: 1px solid var(--gold); transform: rotate(45deg); }
 .tut-title { font-weight: bold; font-size: 1rem; color: var(--gold); margin-bottom: 6px; }
 .tut-text { font-size: 0.9rem; line-height: 1.45; color: rgba(255,255,255,0.92); }
 .tut-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; }
 .tut-count { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
 .tut-skip { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 0.8rem; padding: 6px 4px; }
-.tut-next { background: linear-gradient(135deg, var(--gold), #c9962f); color: #2a1a00; border: none; border-radius: 10px; padding: 9px 18px; font-weight: bold; }
+.tut-next { background: linear-gradient(135deg, var(--gold), #9c7a2e); color: #2a1a00; border: none; border-radius: 10px; padding: 9px 18px; font-weight: bold; }
 
 /* ---------- FILTROS DA CRIAÇÃO ---------- */
 .craft-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
@@ -1013,7 +1015,7 @@ h1 {
   color: var(--text);
   font-size: 0.78rem;
 }
-.craft-chip.active { background: rgba(232,193,90,0.2); border-color: var(--gold); color: var(--gold); font-weight: bold; }
+.craft-chip.active { background: rgba(201,162,75,0.2); border-color: var(--gold); color: var(--gold); font-weight: bold; }
 .craft-clear-btn {
   width: 100%;
   margin: 4px 0;
@@ -1040,7 +1042,7 @@ h1 {
 .ach-info .udesc { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
 
 /* ---------- FORJA ---------- */
-.forge-sel { background: rgba(232,193,90,0.12); border-radius: 10px; }
+.forge-sel { background: rgba(201,162,75,0.12); border-radius: 10px; }
 .forge-compare { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; }
 .forge-col { flex: 1; text-align: center; background: rgba(0,0,0,0.25); border-radius: 10px; padding: 10px 6px; }
 .forge-val { font-weight: bold; font-size: 0.95rem; color: var(--gold); margin-top: 4px; }
@@ -1052,8 +1054,8 @@ h1 {
 .daily-cell .daily-day { font-size: 0.65rem; opacity: 0.7; }
 .daily-cell .daily-reward { font-size: 0.75rem; margin-top: 3px; min-height: 1.2em; }
 .daily-cell.done { opacity: 0.55; }
-.daily-cell.today { border-color: #e8c15a; background: rgba(232,193,90,0.18); }
-.daily-cell.wait { border-color: #e8c15a; }
+.daily-cell.today { border-color: #c9a24b; background: rgba(201,162,75,0.18); }
+.daily-cell.wait { border-color: #c9a24b; }
 
 /* NPCs de missão (lista por local) */
 .npc-list { display: flex; flex-direction: column; gap: 8px; }
@@ -1065,8 +1067,8 @@ h1 {
 .npc-obj { font-size: 0.78rem; opacity: 0.8; }
 .npc-st { font-size: 1.2rem; }
 .npc-objective { font-weight: bold; color: var(--gold); margin-bottom: 6px; }
-.npc-row.npc-epic { border-color: rgba(232,193,90,0.55); background: rgba(232,193,90,0.07); }
-.npc-tag { font-size: 0.65rem; color: var(--gold); border: 1px solid rgba(232,193,90,0.5); border-radius: 6px; padding: 0 4px; margin-left: 4px; font-weight: normal; }
+.npc-row.npc-epic { border-color: rgba(201,162,75,0.55); background: rgba(201,162,75,0.07); }
+.npc-tag { font-size: 0.65rem; color: var(--gold); border: 1px solid rgba(201,162,75,0.5); border-radius: 6px; padding: 0 4px; margin-left: 4px; font-weight: normal; }
 
 /* Estufa */
 .est-bed { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px; margin-top: 8px; }

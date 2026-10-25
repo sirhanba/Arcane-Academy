@@ -323,7 +323,7 @@ function renderSkillTree() {
     line.setAttribute("y1", pa.y);
     line.setAttribute("x2", pb.x);
     line.setAttribute("y2", pb.y);
-    line.setAttribute("stroke", on ? "rgba(232,193,90,0.9)" : "rgba(255,255,255,0.18)");
+    line.setAttribute("stroke", on ? "rgba(201,162,75,0.9)" : "rgba(255,255,255,0.18)");
     line.setAttribute("stroke-width", on ? "3" : "2");
     edgesSvg.appendChild(line);
   });

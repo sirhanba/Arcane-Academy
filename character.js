@@ -7,12 +7,10 @@
 // Lista simulada de nicknames já usados (sem servidor real ainda)
 const RESERVED_NICKS = ["admin", "teste", "moderador", "arcaneacademy"];
 
-const PRESETS = [
-  { label: "Visual 1", hair: "#7d4fd6", face: "#f2c9a0", hairShape: "wave" },
-  { label: "Visual 2", hair: "#e8c15a", face: "#e0a87a", hairShape: "spiky" },
-  { label: "Visual 3", hair: "#3a3a3a", face: "#f6d9b8", hairShape: "long" },
-  { label: "Visual 4", hair: "#a63b3b", face: "#c98a5c", hairShape: "bob" }
-];
+// Visual do personagem: 5 cabelos e 5 rostos por gênero (imagens av_*.png na raiz, em camadas).
+const AV_COUNT = 5;
+const AV_VER = 1; // aumente ao trocar as imagens (evita cache antigo)
+const AV_W = 292, AV_H = 640; // tamanho da tela das camadas
 
 let nickAvailable = false;
 
@@ -72,40 +70,28 @@ function selectGender(g) {
   updateConfirmButton();
 }
 
-function cyclePreset(dir) {
-  state.presetIndex = (state.presetIndex + dir + PRESETS.length) % PRESETS.length;
+function cycleHair(dir) {
+  state.hair = ((state.hair || 0) + dir + AV_COUNT) % AV_COUNT;
   renderAvatar();
 }
 
+function cycleFace(dir) {
+  state.face = ((state.face || 0) + dir + AV_COUNT) % AV_COUNT;
+  renderAvatar();
+}
+
+// Monta o personagem em camadas (corpo + rosto + cabelo) dentro de um <svg viewBox="0 0 292 640">.
 function buildAvatarSvg() {
-  const preset = PRESETS[state.presetIndex];
-  const robeColor = state.gender === "f" ? "#7d4fd6" : "#2f4d8a";
-  const robeShape = state.gender === "f"
-    ? "M35,180 L30,100 Q70,80 110,100 L105,180 Z"
-    : "M38,180 L34,100 Q70,88 106,100 L102,180 Z";
-
-  let hairPath = "";
-  if (preset.hairShape === "wave") {
-    hairPath = "M35,70 Q70,30 105,70 Q100,50 70,45 Q40,50 35,70 Z";
-  } else if (preset.hairShape === "spiky") {
-    hairPath = "M32,72 L45,35 L55,60 L70,30 L85,60 L95,35 L108,72 Z";
-  } else if (preset.hairShape === "long") {
-    hairPath = "M33,70 Q70,25 107,70 L112,150 L98,150 L95,75 L45,75 L42,150 L28,150 Z";
-  } else {
-    hairPath = "M34,72 Q70,32 106,72 Q108,90 95,95 Q70,80 45,95 Q32,90 34,72 Z";
-  }
-
-  return '<circle cx="70" cy="70" r="32" fill="' + preset.face + '" />' +
-    '<path d="' + robeShape + '" fill="' + robeColor + '" />' +
-    '<circle cx="58" cy="68" r="3.5" fill="#2a1a3d" />' +
-    '<circle cx="82" cy="68" r="3.5" fill="#2a1a3d" />' +
-    '<path d="M60,85 Q70,92 80,85" stroke="#5a3a1a" stroke-width="2" fill="none" />' +
-    '<path d="' + hairPath + '" fill="' + preset.hair + '" />';
+  const g = state.gender === "m" ? "m" : "f";
+  const h = Math.min(AV_COUNT - 1, Math.max(0, state.hair || 0));
+  const f = Math.min(AV_COUNT - 1, Math.max(0, state.face || 0));
+  const layer = (n) => '<image href="av_' + n + '.png?v=' + AV_VER + '" x="0" y="0" width="' + AV_W + '" height="' + AV_H + '" />';
+  return layer("body_" + g) + layer("face_" + g + "_" + f) + layer("hair_" + g + "_" + h);
 }
 
 function renderAvatar() {
-  const preset = PRESETS[state.presetIndex];
-  document.getElementById("presetLabel").textContent = preset.label;
+  document.getElementById("hairLabel").textContent = "Cabelo " + ((state.hair || 0) + 1) + "/" + AV_COUNT;
+  document.getElementById("faceLabel").textContent = "Rosto " + ((state.face || 0) + 1) + "/" + AV_COUNT;
   document.getElementById("avatarSvg").innerHTML = buildAvatarSvg();
 }
 
@@ -125,7 +111,7 @@ const HOUSES = [
     id: "noctivia",
     name: "Noctivia",
     icon: "🦉",
-    color: "#e8c15a",
+    color: "#c9a24b",
     desc: "Guardiões do saber noturno, enxergam o que os outros não veem e guardam reservas profundas de magia.",
     buff: "+15% de Mana máxima e +1 Regen de Mana por turno",
     bonuses: { manaPct: 15, manaRegen: 1 }

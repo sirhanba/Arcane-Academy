@@ -68,7 +68,7 @@ async function renderRanking() {
       const house = HOUSES.find(h => h.id === p.house);
       const row = document.createElement("div");
       row.className = "upgrade-row";
-      if (p.isMe) row.style.background = "rgba(232,193,90,0.12)";
+      if (p.isMe) row.style.background = "rgba(201,162,75,0.12)";
 
       const pos = document.createElement("span");
       pos.className = "upgrade-icon";
@@ -339,7 +339,7 @@ function drawChat() {
     const line = friendEl("div");
     line.style.marginBottom = "3px";
     const who = friendEl("b", "", vipTag(m.vip) + friendHouseIcon(m.house) + m.name);
-    who.style.color = m.mine ? "#e8c15a" : "#9ad0ff";
+    who.style.color = m.mine ? "#c9a24b" : "#9ad0ff";
     if (!m.mine) { who.style.cursor = "pointer"; who.onclick = () => openChatUser(m.name); }
     line.appendChild(who);
     if (m.title) line.appendChild(titleSpan(m.title));
